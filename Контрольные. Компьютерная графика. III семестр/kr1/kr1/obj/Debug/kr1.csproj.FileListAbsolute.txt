@@ -1,0 +1,10 @@
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\bin\Debug\kr1.exe.config
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\bin\Debug\kr1.exe
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\bin\Debug\kr1.pdb
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\obj\Debug\kr1.Properties.Resources.resources
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\obj\Debug\kr1.csproj.GenerateResource.cache
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\obj\Debug\kr1.csproj.CoreCompileInputs.cache
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\obj\Debug\kr1.exe
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\obj\Debug\kr1.pdb
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\obj\Debug\kr1.Form1.resources
+D:\Education\Контрольные. Компьютерная графика. III семестр\kr1\kr1\obj\Debug\kr1.csprojAssemblyReference.cache
