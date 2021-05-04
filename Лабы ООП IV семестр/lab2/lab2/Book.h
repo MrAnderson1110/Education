@@ -1,18 +1,11 @@
 #pragma once
 #include <string>
 
-/*
-* Создайте класс, который хранил бы информацию о книге: название, автор, дата
-* издания. Создать несколько объектов. Если в конструктор передан символьный параметр,
-* например «а», то контролировать, начинается ли имя автора с данной буквы. Если нет, то
-* выводить сообщение об ошибке. Если параметр не задан, то контролировать не надо.
-*/
-
 class Book
 {
 public:
-	Book();
-	Book(std::string name, std::string athor, std::string publishDate);
+	Book(char control = '\0');
+	Book(std::string name, std::string athor, std::string publishDate, char control = '\0');
 	Book(const Book& other);
 	~Book();
 
@@ -26,8 +19,9 @@ public:
 
 
 private:
-	std::string *m_name;
-	std::string *m_author;
-	std::string *m_publishDate;
+	std::string m_name;
+	std::string m_author;
+	std::string m_publishDate;
+	char m_control;
 };
 
