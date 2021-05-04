@@ -2,6 +2,19 @@
 #include <algorithm>
 #include <iostream>
 
+// "Дружественная" перегрузка
+// @{
+bool operator==(const Rectangle& left, const Rectangle& right)
+{
+    return left() == right();
+}
+
+bool operator!=(const Rectangle& left, const Rectangle& right)
+{
+    return !(left == right);
+}
+// @}
+
 Rectangle Rectangle::operator*(const Rectangle& other) const
 {
     int leftX = std::max(m_x, other.m_x);
@@ -18,19 +31,9 @@ Rectangle Rectangle::operator*(const Rectangle& other) const
     return Rectangle(leftX, topY, intersectionWidth, intersectionHeight);
 }
 
-bool Rectangle::operator==(const Rectangle& other) const
-{
-    return this->operator()() == other();
-}
-
-bool Rectangle::operator!=(const Rectangle& other) const
-{
-    return !this->operator==(other);
-}
-
 bool Rectangle::operator<(const Rectangle& other) const
 {
-    return !(this->operator>(other)) && (this->operator!=(other));
+    return !(this->operator>(other)) && (*this != other);
 }
 
 bool Rectangle::operator>(const Rectangle& other) const

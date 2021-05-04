@@ -1,13 +1,9 @@
 #pragma once
 
-/*
-Разработать класс «Прямоугольник». Определить в нем конструкторы и деструктор,
-перегрузить операцию пересечения прямоугольников (операция “*”), операцию
-вычисления площади прямоугольника, операции сравнения (по площади)
-*/
-
 class Rectangle
 {
+	friend bool operator==(const Rectangle& left, const Rectangle& right);
+	friend bool operator!=(const Rectangle& left, const Rectangle& right);
 public:
 	Rectangle();
 	Rectangle(int x, int y, int width, int height);
@@ -24,8 +20,6 @@ public:
 	void setY(int y);
 
 	Rectangle operator*(const Rectangle& other) const;
-	bool operator==(const Rectangle& other) const;
-	bool operator!=(const Rectangle& other) const;
 	bool operator<(const Rectangle& other) const;
 	bool operator>(const Rectangle& other) const;
 	int operator()() const;
