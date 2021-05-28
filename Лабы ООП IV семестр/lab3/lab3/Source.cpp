@@ -3,7 +3,7 @@
 
 int main()
 {
-	Rectangle firtsRect(10, 10, -1, -1);
+	Rectangle firtsRect(10, 10, 30, 11);
 	Rectangle secRect(5, 0, 13, 4);
 
 	std::cout << "first rectangle:\n"
