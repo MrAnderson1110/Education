@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>vertShader.vert</file>
-        <file>fragShader.frag</file>
-    </qresource>
-</RCC>
