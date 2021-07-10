@@ -1,0 +1,12 @@
+#ifndef CHESSCHESS_GLOBAL_H
+#define CHESSCHESS_GLOBAL_H
+
+#include <QtGlobal>
+
+#ifdef CHESSCORE_LIB
+#   define CHESSCORE_EXPORT Q_DECL_EXPORT
+#else
+#   define CHESSCORE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // QMLSURFACE_GLOBAL_H

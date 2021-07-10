@@ -16,6 +16,7 @@
     <data key="d0" xml:space="preserve"/>
     <node id="n0" yfiles.foldertype="group">
       <data key="d4" xml:space="preserve"/>
+      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -107,6 +108,7 @@
     </node>
     <node id="n1" yfiles.foldertype="group">
       <data key="d4" xml:space="preserve"/>
+      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -159,12 +161,12 @@
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="48.16064453125" x="239.18256433231318" xml:space="preserve" y="3.0">IPiece<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
               <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
                 <y:AttributeLabel xml:space="preserve">// Текущая позиция на доске с учетом перемещения
-- m_currentPos: BoardPosition
+- m_currentPosition
 // Закрепленная позиция на доске, фиксирована до окончания перемещения
-- m_pinnedPos: BoardPosition
-- m_type: PieceType
+- m_pinPosition
+- m_type
 - m_border: ChessBorder *</y:AttributeLabel>
-                <y:MethodLabel xml:space="preserve">enum PieceType { }
+                <y:MethodLabel xml:space="preserve">enum Type { }
 
 + startMove(): void
 + move(): void
@@ -301,6 +303,7 @@
       </graph>
     </node>
     <edge id="n0::e0" source="n0::n2" target="n0::n0">
+      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -311,6 +314,7 @@
       </data>
     </edge>
     <edge id="n0::e1" source="n0::n1" target="n0::n2">
+      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -323,6 +327,7 @@
       </data>
     </edge>
     <edge id="n0::e2" source="n0::n3" target="n0::n1">
+      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -333,6 +338,7 @@
       </data>
     </edge>
     <edge id="n1::e0" source="n1::n9" target="n1::n0">
+      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -346,6 +352,7 @@
       </data>
     </edge>
     <edge id="n1::e1" source="n1::n1" target="n1::n0">
+      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -359,95 +366,12 @@
       </data>
     </edge>
     <edge id="n1::e2" source="n1::n1" target="n1::n9">
+      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_diamond"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="n1::e3" source="n1::n3" target="n1::n1">
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="534.5307989690721" y="534.8267281105993"/>
-            <y:Point x="769.2350515463917" y="534.8267281105993"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="white_delta"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="n1::e4" source="n1::n2" target="n1::n1">
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="664.5307989690722" y="534.8267281105993"/>
-            <y:Point x="769.2350515463917" y="534.8267281105993"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="white_delta"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="n1::e5" source="n1::n6" target="n1::n1">
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="794.5307989690722" y="534.8267281105993"/>
-            <y:Point x="769.2350515463917" y="534.8267281105993"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="white_delta"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="n1::e6" source="n1::n4" target="n1::n1">
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="924.5307989690722" y="534.8267281105993"/>
-            <y:Point x="769.2350515463917" y="534.8267281105993"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="white_delta"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="n1::e7" source="n1::n5" target="n1::n1">
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="1054.5307989690723" y="534.8267281105993"/>
-            <y:Point x="769.2350515463917" y="534.8267281105993"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="white_delta"/>
-          <y:BendStyle smoothed="false"/>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="n1::e8" source="n1::n7" target="n1::n1">
-      <data key="d9"/>
-      <data key="d10">
-        <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="1184.5307989690723" y="534.8267281105993"/>
-            <y:Point x="769.2350515463917" y="534.8267281105993"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="white_delta"/>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
