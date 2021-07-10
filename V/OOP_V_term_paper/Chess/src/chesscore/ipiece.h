@@ -45,7 +45,7 @@ public:
     ChessBoard *board() const;
 
 public slots:
-    virtual void setType(PieceType type);
+    void setType(PieceType type);
     void setCurrentPosition(Position pos);
     void setPinnedPosition(Position pos);
     void setBoard(ChessBoard *board);
