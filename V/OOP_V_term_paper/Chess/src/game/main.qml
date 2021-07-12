@@ -1,19 +1,27 @@
 import QtQuick 2.11
+import QtQuick.Controls 2.4
+import QtQml 2.11
+import QtQuick.Layouts 1.11
 import QtQuick.Window 2.11
 import qmlplugins 1.0
 
-Window {
-    width: 640
-    height: 480
+ApplicationWindow {
+    id: root
+    height: 640
+    minimumHeight: 480
+    minimumWidth: height
+    maximumWidth: minimumWidth
+
     visible: true
     title: qsTr("Hello World")
 
+    background: Rectangle {
+        id: back
+        color: board.oddColor
+        anchors.fill: parent
+    }
+
     ChessBoard {
-        King {}
-        Queen {}
-        Knife {}
-        Bishop {}
-        Rook {}
-        Pawn { type: IPiece.Knife }
+        id: board
     }
 }

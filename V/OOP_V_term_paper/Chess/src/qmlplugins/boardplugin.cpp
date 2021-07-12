@@ -2,18 +2,13 @@
 
 #include <QtQml>
 
-#include <ChessBoard>
-#include <IPiece>
-#include <BasicPiece>
-#include <BasicPawn>
+#include <BasicBoard>
+#include <BasicGridCell>
 
 void BoardPlugin::registerTypes(const char *uri)
 {
     Q_ASSERT(uri == QLatin1String("qmlplugins"));
 
-    qmlRegisterType<ChessBoard>(uri, 1, 0, "ChessBoard");
-
-    qmlRegisterUncreatableType<IPiece>(uri, 1, 0, "IPiece", "must be create from C++ only");
-    qmlRegisterType<BasicPiece>(uri, 1, 0, "BasicPiece");
-    qmlRegisterType<BasicPawn>(uri, 1, 0, "BasicPawn");
+    qmlRegisterType<BasicBoard>(uri, 1, 0, "BasicBoard");
+    qmlRegisterType<BasicGridCell>(uri, 1, 0, "BasicGridCell");
 }

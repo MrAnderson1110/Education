@@ -1,2 +1,4 @@
 module qmlplugins
+ColorizedImage 1.0 qml/ColorizedImage.qml
+ChessBoard 1.0 qml/ChessBoard.qml
 plugin qmlplugins

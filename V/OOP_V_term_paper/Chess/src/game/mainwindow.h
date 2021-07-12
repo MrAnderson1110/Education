@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QObject>
-#include <QUrl>
 
 /*
  * Псевдо окно приложения.
@@ -14,8 +13,6 @@
 class QQmlApplicationEngine;
 class QQuickView;
 
-class ChessBoard;
-
 class MainWindow : public QObject
 {
     Q_OBJECT
@@ -25,9 +22,6 @@ public:
 
 private:
     QQmlApplicationEngine *m_engine;
-
-    QQuickView *m_view;
-    ChessBoard *m_board;
 };
 
 #endif // MAINWINDOW_H

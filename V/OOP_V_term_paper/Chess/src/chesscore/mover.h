@@ -5,7 +5,7 @@
 
 #include "chesscore_global.h"
 
-class IPiece;
+class BasicPiece;
 
 class CHESSCORE_EXPORT Mover: QObject
 {
@@ -13,12 +13,12 @@ class CHESSCORE_EXPORT Mover: QObject
 public:
     explicit Mover(QObject *parent = nullptr);
 
-    void onMoveStarted(IPiece *piece);
-    void onMove(IPiece *piece);
-    void onMoveFinished(IPiece *piece);
+    void onMoveStarted(BasicPiece *piece);
+    void onMove(BasicPiece *piece);
+    void onMoveFinished(BasicPiece *piece);
 
 private:
-    IPiece *m_movingPiece;
+    BasicPiece *m_movingPiece;
 };
 
 #endif // MOVER_H
