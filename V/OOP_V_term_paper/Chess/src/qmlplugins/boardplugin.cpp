@@ -4,6 +4,7 @@
 
 #include <BasicBoard>
 #include <BasicGridCell>
+#include <BasicPiece>
 
 void BoardPlugin::registerTypes(const char *uri)
 {
@@ -11,4 +12,5 @@ void BoardPlugin::registerTypes(const char *uri)
 
     qmlRegisterType<BasicBoard>(uri, 1, 0, "BasicBoard");
     qmlRegisterType<BasicGridCell>(uri, 1, 0, "BasicGridCell");
+    qmlRegisterType<BasicPiece>(uri, 1, 0, "BasicPiece");
 }

@@ -1,30 +1,9 @@
 #include "basicgridcell.h"
 
 BasicGridCell::BasicGridCell(QQuickItem *parent)
-    : QQuickItem(parent)
-    , m_background(nullptr)
+    : GraphicItem(parent)
 {
 
-}
-
-QQuickItem *BasicGridCell::background() const
-{
-    return m_background;
-}
-
-void BasicGridCell::setBackground(QQuickItem *newBackground)
-{
-    if(m_background == newBackground)
-        return;
-
-    if(m_background)
-        delete m_background;
-
-    m_background = newBackground;
-    m_background->setParent(this);
-    m_background->setParentItem(this);
-
-    emit backgroundChanged(m_background);
 }
 
 int BasicGridCell::rowIndex() const

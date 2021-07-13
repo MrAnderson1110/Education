@@ -1,9 +1,11 @@
 #include "basicboard.h"
 #include "basicgridcell.h"
+#include "basicpiece.h"
 
 BasicBoard::BasicBoard(QQuickItem *parent)
     : QQuickItem(parent)
     , m_grid()
+    , m_pieces()
 {
 
 }
@@ -20,11 +22,15 @@ void BasicBoard::componentComplete()
                 continue;
 
             BasicGridCell *cell = qobject_cast<BasicGridCell *>(child);
+            BasicPiece *piece = qobject_cast<BasicPiece *>(child);
             if(cell != nullptr && m_grid[cell->rowIndex()][cell->columnIndex()] != nullptr) {
                 m_grid[cell->rowIndex()][cell->columnIndex()] = cell;
                 continue;
             }
-            // Тоже самое для фигур
+            else if(piece != nullptr) {
+                m_pieces.append(piece);
+                continue;
+            }
             else
                 newChildren.append(child->childItems());
         }
@@ -33,6 +39,6 @@ void BasicBoard::componentComplete()
 
         children = newChildren;
     }
-
+    Q_ASSERT(m_pieces.size() == 32);
     QQuickItem::componentComplete();
 }

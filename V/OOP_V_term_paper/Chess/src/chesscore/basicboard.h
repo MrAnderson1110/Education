@@ -13,6 +13,7 @@
  */
 
 class BasicGridCell;
+class BasicPiece;
 
 class CHESSCORE_EXPORT BasicBoard : public QQuickItem
 {
@@ -25,6 +26,7 @@ public:
 
 private:
     QHash<int, QHash<int, BasicGridCell *>> m_grid;
+    QList<BasicPiece *> m_pieces;
 };
 
 #endif // BASICBOARD_H

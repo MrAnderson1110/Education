@@ -1,11 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>resources/bishop.svg</file>
-        <file>resources/king.svg</file>
-        <file>resources/knight.svg</file>
-        <file>resources/pawn.svg</file>
-        <file>resources/queen.svg</file>
-        <file>resources/rook.svg</file>
     </qresource>
 </RCC>

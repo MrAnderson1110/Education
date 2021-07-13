@@ -1,10 +1,12 @@
 HEADERS += \
     $$PWD/basicboard.h \
     $$PWD/basicgridcell.h \
+    $$PWD/basicpiece.h \
     $$PWD/chesscore_global.h \
-    $$PWD/mover.h
+    $$PWD/graphicitem.h
 
 SOURCES += \
     $$PWD/basicboard.cpp \
     $$PWD/basicgridcell.cpp \
-    $$PWD/mover.cpp
+    $$PWD/basicpiece.cpp \
+    $$PWD/graphicitem.cpp

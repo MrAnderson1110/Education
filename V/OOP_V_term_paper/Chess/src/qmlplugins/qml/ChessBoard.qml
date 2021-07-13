@@ -1,10 +1,14 @@
 import QtQuick 2.11
 import QtQuick.Layouts 1.11
+
 import qmlplugins 1.0
 
 BasicBoard {
     id: board
-    anchors.fill: parent
+    property color evenColor: "#8b4513"
+    property color oddColor: "#ffe4b5"
+    property int generalMargin: 20
+
     GridLayout {
         rows: 2
         columns: 2
@@ -15,12 +19,13 @@ BasicBoard {
             id: rowIndexes
             Layout.column: 2
             Layout.row: 1
+            Layout.rightMargin: generalMargin
             spacing: 1
             Repeater {
                 model: 8
                 Text {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 20
+                    Layout.preferredHeight: generalMargin
                     color: "black"
                     text: index
                     verticalAlignment: Qt.AlignVCenter
@@ -33,11 +38,12 @@ BasicBoard {
             spacing: 1
             Layout.column: 1
             Layout.row: 2
+            Layout.bottomMargin: generalMargin
             Repeater {
                 model: 8
                 Text {
                     Layout.fillHeight: true
-                    Layout.preferredWidth: 20
+                    Layout.preferredWidth: generalMargin
                     color: "black"
                     text: index
                     verticalAlignment: Qt.AlignVCenter
@@ -53,6 +59,8 @@ BasicBoard {
             rowSpacing: 1
             Layout.column: 2
             Layout.row: 2
+            Layout.rightMargin: generalMargin
+            Layout.bottomMargin: generalMargin
             Repeater {
                 id: rep
                 model: celles.rows * celles.columns
@@ -66,7 +74,7 @@ BasicBoard {
                     columnIndex: Layout.column
                     background: Rectangle {
                         anchors.fill: cell
-                        color: (index + 1) % 2 ? "red" : "green"
+                        color: (cell.rowIndex + cell.columnIndex) % 2 ? evenColor : oddColor
                         border.width: 1
                         border.color: "black"
                     }

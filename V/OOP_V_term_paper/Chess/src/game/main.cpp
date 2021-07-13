@@ -11,11 +11,6 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    app.setApplicationName("Chess");
-    app.setApplicationVersion("1.0");
-    app.setOrganizationDomain("LocalHost");
-    app.setOrganizationName("GUAP");
-
     QQmlApplicationEngine engine;
 #ifdef QT_DEBUG
     engine.addImportPath(QGuiApplication::applicationDirPath() + QStringLiteral("/../plugins"));
@@ -23,7 +18,6 @@ int main(int argc, char *argv[])
 #else
     engine.addImportPath(QGuiApplication::applicationDirPath() + QStringLiteral("/libs"));
 #endif
-
     MainWindow window(&engine);
 
     QUrl appUrl(MAIN_QML);

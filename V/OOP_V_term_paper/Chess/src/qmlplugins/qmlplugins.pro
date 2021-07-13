@@ -51,6 +51,19 @@ for(var, $$list($$files($$quote(*.qml), true))) {
     QMAKE_POST_LINK += \
     $$QMAKE_COPY $$replace($$list($$ABSOLUTE_SOURCE_FILE $$ABSOLUTE_DEST), /, $$QMAKE_DIR_SEP)
 }
+for(var, $$list($$files($$quote(*.svg), true))) {
+    LSOURCE_FILE = $$join(var,,$$QMAKE_DIR_SEP,)
+    ABSOLUTE_SOURCE_FILE = $$quote($$join(LSOURCE_FILE,,$$PWD,))
+    ABSOLUTE_DEST_FILE = $$join(LSOURCE_FILE,,$$DESTDIR,)
+    ABSOLUTE_DEST = $$quote($$dirname(ABSOLUTE_DEST_FILE))
+    qmlfiles.files = ABSOLUTE_SOURCE_FILE
+    qmlfiles.path = ABSOLUTE_DEST
+    INSTALLS += qmlfiles
+    mkpath($$ABSOLUTE_DEST)
+    isEmpty(QMAKE_POST_LINK) { } else { QMAKE_POST_LINK += & }
+    QMAKE_POST_LINK += \
+    $$QMAKE_COPY $$replace($$list($$ABSOLUTE_SOURCE_FILE $$ABSOLUTE_DEST), /, $$QMAKE_DIR_SEP)
+}
 
 MOC_DIR = $${ROOT_DIR}/build-$${QT_VERSION}/$${PRO_NAME}
 OBJECTS_DIR = $${ROOT_DIR}/build-$${QT_VERSION}/$${PRO_NAME}

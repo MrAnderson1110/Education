@@ -6,5 +6,6 @@ SOURCES += \
 
 DISTFILES += \
     $$PWD/qml/ChessBoard.qml \
+    $$PWD/qml/ChessPiece.qml \
     $$PWD/qml/ColorizedImage.qml \
     $$PWD/qmldir
