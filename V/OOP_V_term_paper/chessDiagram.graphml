@@ -33,15 +33,20 @@
       <data key="d4" xml:space="preserve"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="145.6371134020618" width="327.79361489857007" x="-38.48635564634924" y="-369.47104788232207"/>
+          <y:Geometry height="161.8481733098959" width="327.79361489857007" x="-38.48635564634924" y="-369.47104788232207"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="34.265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="220.68359375" x="53.555010574285035" xml:space="preserve" y="3.0">BasicBoard
 Описывает компонент доски<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel xml:space="preserve">- m_pieces: QList&lt;BasicPiece *&gt;
-- m_grid: QHash&lt;int, QHash&lt;int, BasicGridCell *&gt;&gt;</y:AttributeLabel>
-            <y:MethodLabel xml:space="preserve"/>
+- m_grid: QHash&lt;int, QHash&lt;int, BasicGridCell *&gt;&gt;
+- m_inverted: bool</y:AttributeLabel>
+            <y:MethodLabel xml:space="preserve">// стандартные геттеры и сеттеры
+
+- initializePiece(BasicPiece *piece): void
+- findColumnForPawn(int row): int
+</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -50,15 +55,18 @@
       <data key="d4" xml:space="preserve"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="104.94103092783507" width="307.1484536082475" x="328.32278136728576" y="-174.56150332260438"/>
+          <y:Geometry height="119.90508622737411" width="307.1484536082475" x="328.32278136728576" y="-182.0435309723739"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="34.265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="260.9912109375" x="23.078621335373754" xml:space="preserve" y="3.0">BasicGridCell
 Описывает компонент поля доски<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel xml:space="preserve">- m_rowIndex: int
-- m_columnIndex: int</y:AttributeLabel>
-            <y:MethodLabel xml:space="preserve">// стандартные геттеры и сеттеры</y:MethodLabel>
+- m_columnIndex: int
+- m_piece: BasicPiece *</y:AttributeLabel>
+            <y:MethodLabel xml:space="preserve">// стандартные геттеры и сеттеры
+
+~ virtual polishContent(): void</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -67,14 +75,16 @@
       <data key="d4" xml:space="preserve"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="104.94103092783507" width="307.1484536082475" x="654.2907240248942" y="-349.1230066452087"/>
+          <y:Geometry height="122.39909544396414" width="307.1484536082475" x="654.2907240248942" y="-357.85203890327324"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="34.265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="299.2802734375" x="3.9340900853737537" xml:space="preserve" y="3.0">GraphicItem
 Инкапсулирует стиль элементов доски<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel xml:space="preserve">- m_background: QQuickItem *</y:AttributeLabel>
-            <y:MethodLabel xml:space="preserve">// стандартные геттеры и сеттеры</y:MethodLabel>
+            <y:MethodLabel xml:space="preserve">// стандартные геттеры и сеттеры
+
+~ virtual polishContent(): void</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -100,7 +110,6 @@ enum class Command { }
       </data>
     </node>
     <edge id="e0" source="n2" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -111,7 +120,6 @@ enum class Command { }
       </data>
     </edge>
     <edge id="e1" source="n4" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -122,7 +130,6 @@ enum class Command { }
       </data>
     </edge>
     <edge id="e2" source="n2" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -135,7 +142,6 @@ enum class Command { }
       </data>
     </edge>
     <edge id="e3" source="n4" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -149,7 +155,6 @@ enum class Command { }
       </data>
     </edge>
     <edge id="e4" source="n1" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -163,7 +168,6 @@ enum class Command { }
       </data>
     </edge>
     <edge id="e5" source="n3" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -172,6 +176,18 @@ enum class Command { }
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e6" source="n4" target="n2">
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="white_diamond"/>
+          <y:EdgeLabel alignment="center" configuration="AutoFlippingLabel" distance="2.0" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="17.96875" horizontalTextPosition="center" iconTextGap="4" modelName="custom" preferredPlacement="anywhere" ratio="0.5" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.8984375" x="-318.67384559087304" xml:space="preserve" y="-38.98437469950716">1..1<y:LabelModel><y:SmartEdgeLabelModel autoRotationEnabled="false" defaultAngle="0.0" defaultDistance="10.0"/></y:LabelModel><y:ModelParameter><y:SmartEdgeLabelModelParameter angle="0.0" distance="30.0" distanceToCenter="true" position="right" ratio="1.0" segment="-1"/></y:ModelParameter><y:PreferredPlacementDescriptor angle="0.0" angleOffsetOnRightSide="0" angleReference="absolute" angleRotationOnRightSide="co" distance="-1.0" frozen="true" placement="anywhere" side="anywhere" sideReference="relative_to_edge_flow"/></y:EdgeLabel>
           <y:BendStyle smoothed="false"/>
         </y:PolyLineEdge>
       </data>
