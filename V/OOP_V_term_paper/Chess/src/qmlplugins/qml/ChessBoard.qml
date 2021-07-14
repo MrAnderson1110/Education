@@ -1,13 +1,38 @@
 import QtQuick 2.11
+import QtQml 2.11
 import QtQuick.Layouts 1.11
 
 import qmlplugins 1.0
 
 BasicBoard {
     id: board
-    property color evenColor: "#8b4513"
-    property color oddColor: "#ffe4b5"
+    property color evenColor: "#8B4513"
+    property color oddColor: "#D2B48C"
     property int generalMargin: 20
+
+    QtObject {
+        id: p
+        function mapIndexToLetter(index) {
+            switch(index) {
+            case 7:
+                return "A"
+            case 6:
+                return "B"
+            case 5:
+                return "C"
+            case 4:
+                return "D"
+            case 3:
+                return "E"
+            case 2:
+                return "F"
+            case 1:
+                return "G"
+            case 0:
+                return "H"
+            }
+        }
+    }
 
     GridLayout {
         rows: 2
@@ -45,7 +70,7 @@ BasicBoard {
                     Layout.fillHeight: true
                     Layout.preferredWidth: generalMargin
                     color: "black"
-                    text: index
+                    text: p.mapIndexToLetter(index)
                     verticalAlignment: Qt.AlignVCenter
                     horizontalAlignment: Qt.AlignHCenter
                 }
@@ -73,7 +98,6 @@ BasicBoard {
                     rowIndex: Layout.row
                     columnIndex: Layout.column
                     background: Rectangle {
-                        anchors.fill: cell
                         color: (cell.rowIndex + cell.columnIndex) % 2 ? evenColor : oddColor
                         border.width: 1
                         border.color: "black"

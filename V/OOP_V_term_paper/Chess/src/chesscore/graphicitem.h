@@ -15,6 +15,10 @@ public:
 public slots:
     void setBackground(QQuickItem *newBackground);
 
+protected:
+    virtual void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+    virtual void polishContent();
+
 signals:
     void backgroundChanged(QQuickItem *);
 

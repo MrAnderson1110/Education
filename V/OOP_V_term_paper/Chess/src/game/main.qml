@@ -8,9 +8,9 @@ import qmlplugins 1.0
 ApplicationWindow {
     id: root
     height: 640
+    width: 640
     minimumHeight: 480
-    minimumWidth: height
-    maximumWidth: minimumWidth
+    minimumWidth: minimumHeight
 
     visible: true
     title: qsTr("Hello World")
@@ -67,42 +67,42 @@ ApplicationWindow {
         ChessPiece {
             id: blackRookPawn_1
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: blackRookPawn_2
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: blackBishopPawn_1
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: blackBishopPawn_2
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: blackKnifePawn_1
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: blackKnifePawn_2
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: blackQueenPawn
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: blackKingPawn
             command: BasicPiece.Black
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
 
         ChessPiece {
@@ -148,42 +148,42 @@ ApplicationWindow {
         ChessPiece {
             id: whiteRookPawn_1
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: whiteRookPawn_2
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: whiteBishopPawn_1
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: whiteBishopPawn_2
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: whiteKnifePawn_1
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: whiteKnifePawn_2
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: whiteQueenPawn
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
         ChessPiece {
             id: whiteKingPawn
             command: BasicPiece.White
-            type: BasicPiece.Rook
+            type: BasicPiece.Pawn
         }
     }
 }

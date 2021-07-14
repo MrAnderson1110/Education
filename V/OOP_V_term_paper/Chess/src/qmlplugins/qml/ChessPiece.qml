@@ -9,7 +9,6 @@ BasicPiece {
     property color blackColor: "black"
     background: ColorizedImage {
         id: img
-        anchors.fill: parent
         color: root.command === BasicPiece.White ? whiteColor : blackColor
         source: p.__mapTypeToIconSource(root.type)
     }
