@@ -61,9 +61,7 @@
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="34.265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="260.9912109375" x="23.078621335373754" xml:space="preserve" y="3.0">BasicGridCell
 Описывает компонент поля доски<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel xml:space="preserve">- m_rowIndex: int
-- m_columnIndex: int
-- m_piece: BasicPiece *</y:AttributeLabel>
+            <y:AttributeLabel xml:space="preserve">- m_piece: BasicPiece *</y:AttributeLabel>
             <y:MethodLabel xml:space="preserve">// стандартные геттеры и сеттеры
 
 ~ virtual polishContent(): void</y:MethodLabel>
@@ -81,7 +79,9 @@
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="34.265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="299.2802734375" x="3.9340900853737537" xml:space="preserve" y="3.0">GraphicItem
 Инкапсулирует стиль элементов доски<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel xml:space="preserve">- m_background: QQuickItem *</y:AttributeLabel>
+            <y:AttributeLabel xml:space="preserve">- m_background: QQuickItem *
+- m_rowIndex: int
+- m_columnIndex: int</y:AttributeLabel>
             <y:MethodLabel xml:space="preserve">// стандартные геттеры и сеттеры
 
 ~ virtual polishContent(): void</y:MethodLabel>
@@ -181,7 +181,6 @@ enum class Command { }
       </data>
     </edge>
     <edge id="e6" source="n4" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
