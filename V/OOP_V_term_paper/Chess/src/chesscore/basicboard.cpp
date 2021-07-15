@@ -49,6 +49,19 @@ void BasicBoard::componentComplete()
     QQuickItem::componentComplete();
 }
 
+BasicGridCell *BasicBoard::cell(int rowIndex, int columnIndex)
+{
+    Q_ASSERT(rowIndex >= 0 && columnIndex >= 0);
+    Q_ASSERT(m_grid.size() > rowIndex);
+
+    const QHash<int, BasicGridCell *> &column = m_grid.value(rowIndex);
+
+    Q_ASSERT(column.size() > columnIndex);
+    Q_ASSERT(column.value(columnIndex) != nullptr);
+
+    return column.value(columnIndex);
+}
+#include "piecestrategy.h"
 void BasicBoard::initializePiece(BasicPiece *piece)
 {
     int row = -1;
@@ -99,7 +112,6 @@ void BasicBoard::initializePiece(BasicPiece *piece)
         break;
     case BasicPiece::Type::Pawn:
         column = findColumnForPawn(row);
-        qDebug() << "pawn column:" << column;
         break;
     case BasicPiece::Type::Undefined:
     default:
@@ -110,21 +122,25 @@ void BasicBoard::initializePiece(BasicPiece *piece)
     BasicGridCell *cell = m_grid.value(row).value(column);
 
     Q_ASSERT(cell != nullptr);
+    piece->setRowIndex(row);
+    piece->setColumnIndex(column);
     cell->setPiece(piece);
 }
 
 int BasicBoard::findColumnForPawn(int row)
 {
     Q_ASSERT(row >= 0);
+    // Ошибка поиска, возвращаем невалидный индекс
     if(m_grid.value(row).isEmpty())
-        return 0;
+        return -1;
 
     const QHash<int, BasicGridCell *> celles = m_grid.value(row);
     for(int i = 0; i < 8; ++i)
         if(celles.value(i)->piece() == nullptr)
             return i;
 
-    return 0;
+    // Ошибка поиска, возвращаем невалидный индекс
+    return -1;
 }
 
 bool BasicBoard::inverted() const

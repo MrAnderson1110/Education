@@ -3,6 +3,8 @@
 GraphicItem::GraphicItem(QQuickItem *parent)
     : QQuickItem(parent)
     , m_background(nullptr)
+    , m_rowIndex(-1)
+    , m_columnIndex(-1)
 {
 
 }
@@ -41,6 +43,35 @@ void GraphicItem::setBackground(QQuickItem *newBackground)
 void GraphicItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
-
     polishContent();
+}
+
+int GraphicItem::rowIndex() const
+{
+    return m_rowIndex;
+}
+
+void GraphicItem::setRowIndex(int newRowIndex)
+{
+    if (m_rowIndex == newRowIndex)
+        return;
+
+    m_rowIndex = newRowIndex;
+    polishContent();
+    emit rowIndexChanged(m_rowIndex);
+}
+
+int GraphicItem::columnIndex() const
+{
+    return m_columnIndex;
+}
+
+void GraphicItem::setColumnIndex(int newColumnIndex)
+{
+    if (m_columnIndex == newColumnIndex)
+        return;
+
+    m_columnIndex = newColumnIndex;
+    polishContent();
+    emit columnIndexChanged(m_columnIndex);
 }

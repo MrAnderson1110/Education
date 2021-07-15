@@ -23,7 +23,9 @@ class CHESSCORE_EXPORT BasicBoard : public QQuickItem
 public:
     explicit BasicBoard(QQuickItem *parent = nullptr);
 
-    void componentComplete();
+    virtual void componentComplete() override final;
+
+    BasicGridCell *cell(int rowIndex, int columnIndex);
 
     bool inverted() const;
 

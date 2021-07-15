@@ -3,7 +3,8 @@ HEADERS += \
     $$PWD/basicgridcell.h \
     $$PWD/basicpiece.h \
     $$PWD/chesscore_global.h \
-    $$PWD/graphicitem.h
+    $$PWD/graphicitem.h \
+    $$PWD/piecestrategy.h
 
 SOURCES += \
     $$PWD/basicboard.cpp \
