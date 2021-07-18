@@ -5,9 +5,10 @@ import QtQuick.Layouts 1.11
 import qmlplugins 1.0
 
 BasicBoard {
-    id: board
+    id: root
     property color evenColor: "#8B4513"
     property color oddColor: "#D2B48C"
+    property color selectColor: "#629C63"
     property int generalMargin: 20
 
     QtObject {
@@ -89,18 +90,20 @@ BasicBoard {
             Repeater {
                 id: rep
                 model: celles.rows * celles.columns
-                BasicGridCell {
-                    id: cell
+                GridCell {
+                    oddColor: root.oddColor
+                    evenColor: root.evenColor
+                    selectColor: root.selectColor
                     Layout.row: index / 8
                     Layout.column: (index + 8) % 8
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     rowIndex: Layout.row
                     columnIndex: Layout.column
-                    background: Rectangle {
-                        color: (cell.rowIndex + cell.columnIndex) % 2 ? evenColor : oddColor
-                        border.width: 1
-                        border.color: "black"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: root.clearSelection()
                     }
                 }
             }

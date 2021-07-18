@@ -4,7 +4,7 @@
 #include "graphicitem.h"
 #include "chesscore_global.h"
 
-class BasicGridCell;
+class BasicBoard;
 
 class CHESSCORE_EXPORT BasicPiece : public GraphicItem
 {
@@ -21,7 +21,7 @@ public:
         Undefined,
         King,
         Queen,
-        Knife,
+        Knight,
         Bishop,
         Rook,
         Pawn
@@ -33,15 +33,22 @@ public:
     Command command() const;
     Type type() const;
 
+    void setBoard(BasicBoard *board);
+
 public slots:
     void setCommand(Command newCommand);
     void setType(Type newType);
+
+    void startMove();
+    void move(const QRect &geometry);
+    void finishMove();
 
 signals:
     void commandChanged(Command);
     void typeChanged(Type);
 
 private:
+    BasicBoard *m_board;
     Command m_command;
     Type m_type;
 };

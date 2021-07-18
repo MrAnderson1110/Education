@@ -14,6 +14,7 @@
 
 class BasicGridCell;
 class BasicPiece;
+class Mover;
 
 class CHESSCORE_EXPORT BasicBoard : public QQuickItem
 {
@@ -26,8 +27,13 @@ public:
     virtual void componentComplete() override final;
 
     BasicGridCell *cell(int rowIndex, int columnIndex);
+    BasicGridCell *cellUnderMouse(const QPointF &mouse);
+    void select(int rowIndex, int columnIndex);
+    void deselect(int rowIndex, int columnIndex);
+    Q_INVOKABLE void clearSelection();
 
-    bool inverted() const;
+    bool inverted() const;    
+    Mover *mover() const;
 
 public slots:
     void setInverted(bool newInverted);
@@ -43,6 +49,7 @@ private:
     QHash<int, QHash<int, BasicGridCell *>> m_grid;
     QList<BasicPiece *> m_pieces;
     bool m_inverted;
+    Mover *m_mover;
 };
 
 #endif // BASICBOARD_H

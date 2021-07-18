@@ -1,12 +1,14 @@
 #include "basicboard.h"
 #include "basicgridcell.h"
 #include "basicpiece.h"
+#include "mover.h"
 
 BasicBoard::BasicBoard(QQuickItem *parent)
     : QQuickItem(parent)
     , m_grid()
     , m_pieces()
     , m_inverted(false)
+    , m_mover(new Mover(this))
 {
 
 }
@@ -17,8 +19,7 @@ void BasicBoard::componentComplete()
     bool hasUncheckedChildren = true;
     while(hasUncheckedChildren) {
         QList<QQuickItem *> newChildren;
-        for(QList<QQuickItem *>::const_iterator it = children.cbegin(); it != children.cend(); ++it) {
-            QQuickItem *child = *it;
+        for(QQuickItem *child : children) {
             if(!child)
                 continue;
 
@@ -51,17 +52,53 @@ void BasicBoard::componentComplete()
 
 BasicGridCell *BasicBoard::cell(int rowIndex, int columnIndex)
 {
-    Q_ASSERT(rowIndex >= 0 && columnIndex >= 0);
-    Q_ASSERT(m_grid.size() > rowIndex);
+    if(m_grid.size() <= rowIndex)
+        return nullptr;
 
     const QHash<int, BasicGridCell *> &column = m_grid.value(rowIndex);
 
-    Q_ASSERT(column.size() > columnIndex);
+    if(rowIndex < 0 || columnIndex < 0 || column.size() == 0
+            || rowIndex >= 8 || columnIndex >= 8)
+        return nullptr;
+
     Q_ASSERT(column.value(columnIndex) != nullptr);
 
     return column.value(columnIndex);
 }
-#include "piecestrategy.h"
+
+BasicGridCell *BasicBoard::cellUnderMouse(const QPointF &mouse)
+{
+    for(const QHash<int, BasicGridCell *> &celles : qAsConst(m_grid)) {
+        for(BasicGridCell *cell : celles) {
+            if(cell->geometry().contains(mouse))
+                return cell;
+        }
+    }
+
+    return nullptr;
+}
+
+void BasicBoard::select(int rowIndex, int columnIndex)
+{
+    BasicGridCell *cellForSelect = cell(rowIndex, columnIndex);
+
+    if(cellForSelect != nullptr)
+        cellForSelect->setSelected(true);
+}
+
+void BasicBoard::deselect(int rowIndex, int columnIndex)
+{
+    BasicGridCell *cellForDeselect = cell(rowIndex, columnIndex);
+
+    if(cellForDeselect != nullptr)
+        cellForDeselect->setSelected(false);
+}
+
+void BasicBoard::clearSelection()
+{
+    m_mover->updateSelection(nullptr);
+}
+
 void BasicBoard::initializePiece(BasicPiece *piece)
 {
     int row = -1;
@@ -98,7 +135,7 @@ void BasicBoard::initializePiece(BasicPiece *piece)
         else
             column = 5;
         break;
-    case BasicPiece::Type::Knife:
+    case BasicPiece::Type::Knight:
         if(m_grid.value(row).value(1)->piece() == nullptr)
             column = 1;
         else
@@ -124,6 +161,7 @@ void BasicBoard::initializePiece(BasicPiece *piece)
     Q_ASSERT(cell != nullptr);
     piece->setRowIndex(row);
     piece->setColumnIndex(column);
+    piece->setBoard(this);
     cell->setPiece(piece);
 }
 
@@ -141,6 +179,11 @@ int BasicBoard::findColumnForPawn(int row)
 
     // Ошибка поиска, возвращаем невалидный индекс
     return -1;
+}
+
+Mover *BasicBoard::mover() const
+{
+    return m_mover;
 }
 
 bool BasicBoard::inverted() const

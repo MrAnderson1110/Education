@@ -4,6 +4,7 @@
 BasicGridCell::BasicGridCell(QQuickItem *parent)
     : GraphicItem(parent)
     , m_piece(nullptr)
+    , m_selected(false)
 {
 
 }
@@ -32,8 +33,25 @@ void BasicGridCell::setPiece(BasicPiece *newPiece)
         return;
 
     m_piece = newPiece;
-    newPiece->setParentItem(this);
+
+    if(newPiece)
+        newPiece->setParentItem(this);
+
     polishContent();
 
     emit pieceChanged(m_piece);
+}
+
+bool BasicGridCell::selected() const
+{
+    return m_selected;
+}
+
+void BasicGridCell::setSelected(bool newSelected)
+{
+    if (m_selected == newSelected)
+        return;
+
+    m_selected = newSelected;
+    emit selectedChanged(m_selected);
 }

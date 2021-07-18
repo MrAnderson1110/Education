@@ -19,23 +19,28 @@ class CHESSCORE_EXPORT BasicGridCell : public GraphicItem
 {
     Q_OBJECT
     Q_PROPERTY(BasicPiece *piece READ piece WRITE setPiece NOTIFY pieceChanged)
+    Q_PROPERTY(bool selected READ selected NOTIFY selectedChanged)
 
 public:
     explicit BasicGridCell(QQuickItem *parent = nullptr);
 
+    virtual void polishContent() override;
+
     BasicPiece *piece() const;
+
+    bool selected() const;
+    void setSelected(bool newSelected);
 
 public slots:
     void setPiece(BasicPiece *newPiece);
 
-protected:
-    virtual void polishContent() override;
-
 signals:
     void pieceChanged(BasicPiece *);
+    void selectedChanged(bool);
 
 private:
     BasicPiece *m_piece;
+    bool m_selected;
 };
 
 #endif // BASICGRIDCELL_H

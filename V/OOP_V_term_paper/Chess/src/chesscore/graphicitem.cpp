@@ -51,6 +51,21 @@ int GraphicItem::rowIndex() const
     return m_rowIndex;
 }
 
+QRectF GraphicItem::geometry() const
+{
+    return QRectF(x(), y(), width(), height());
+}
+
+void GraphicItem::setGeometry(const QRectF &geometry)
+{
+    setX(geometry.x());
+    setY(geometry.y());
+    setWidth(geometry.width());
+    setHeight(geometry.height());
+
+    polishContent();
+}
+
 void GraphicItem::setRowIndex(int newRowIndex)
 {
     if (m_rowIndex == newRowIndex)

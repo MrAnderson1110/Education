@@ -16,6 +16,8 @@ public:
     int columnIndex() const;
     int rowIndex() const;
 
+    QRectF geometry() const;
+    void setGeometry(const QRectF &geometry);
 
 public slots:
     void setBackground(QQuickItem *newBackground);

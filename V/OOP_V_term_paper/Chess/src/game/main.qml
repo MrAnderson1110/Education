@@ -45,14 +45,14 @@ ApplicationWindow {
             type: BasicPiece.Bishop
         }
         ChessPiece {
-            id: blackKnife_1
+            id: blackKnight_1
             command: BasicPiece.Black
-            type: BasicPiece.Knife
+            type: BasicPiece.Knight
         }
         ChessPiece {
-            id: blackKnife_2
+            id: blackKnight_2
             command: BasicPiece.Black
-            type: BasicPiece.Knife
+            type: BasicPiece.Knight
         }
         ChessPiece {
             id: blackRook_1
@@ -85,12 +85,12 @@ ApplicationWindow {
             type: BasicPiece.Pawn
         }
         ChessPiece {
-            id: blackKnifePawn_1
+            id: blackKnightPawn_1
             command: BasicPiece.Black
             type: BasicPiece.Pawn
         }
         ChessPiece {
-            id: blackKnifePawn_2
+            id: blackKnightPawn_2
             command: BasicPiece.Black
             type: BasicPiece.Pawn
         }
@@ -126,14 +126,14 @@ ApplicationWindow {
             type: BasicPiece.Bishop
         }
         ChessPiece {
-            id: whiteKnife_1
+            id: whiteKnight_1
             command: BasicPiece.White
-            type: BasicPiece.Knife
+            type: BasicPiece.Knight
         }
         ChessPiece {
-            id: whiteKnife_2
+            id: whiteKnight_2
             command: BasicPiece.White
-            type: BasicPiece.Knife
+            type: BasicPiece.Knight
         }
         ChessPiece {
             id: whiteRook_1
@@ -166,12 +166,12 @@ ApplicationWindow {
             type: BasicPiece.Pawn
         }
         ChessPiece {
-            id: whiteKnifePawn_1
+            id: whiteKnightPawn_1
             command: BasicPiece.White
             type: BasicPiece.Pawn
         }
         ChessPiece {
-            id: whiteKnifePawn_2
+            id: whiteKnightPawn_2
             command: BasicPiece.White
             type: BasicPiece.Pawn
         }
