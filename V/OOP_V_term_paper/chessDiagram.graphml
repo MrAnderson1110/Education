@@ -103,7 +103,7 @@
       <data key="d4" xml:space="preserve"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="215.4544318494937" width="373.39557342391566" x="-553.1922069208306" y="-375.58300480189075"/>
+          <y:Geometry height="298.5381111121665" width="373.39557342391566" x="-553.1922069208306" y="-417.12484443322717"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="34.265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="308.10986328125" x="32.64285507133283" xml:space="preserve" y="3.0">Mover
@@ -112,14 +112,20 @@
             <y:AttributeLabel xml:space="preserve">- m_preMovingCell: BasicGridCell *
 - m_movingPiece: BasicPiece *
 - m_selection: QList&lt;BasicGridCell *&gt;
-- m_board: BasicBoard *</y:AttributeLabel>
+- m_board: BasicBoard *
+- m_currentCommand: BasicPiece::Command</y:AttributeLabel>
             <y:MethodLabel xml:space="preserve">+ startMove(BasicPiece *): void
 + move(BasicPiece *, const QRectF &amp;geometry): void
 + finishMove(BasicPiece *): void
 + updateSelection(BasicPiece *): void
 
 - getWhiteMoves(BasicPiece *): QList&lt;QPoint&gt;
-- getBlackMoves(BasicPiece *): QList&lt;QPoint&gt;</y:MethodLabel>
+- getBlackMoves(BasicPiece *): QList&lt;QPoint&gt;
+- moveRook(const QPoint &amp;newKingPos, BasicPiece *movingPiece): void
+- checkPawn(BasicPiece *movedPiece): void
+
+signals:
++ pawnCanChange(BasicPiece *): void</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -130,7 +136,7 @@
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
             <y:GroupNode>
-              <y:Geometry height="646.5699970975447" width="369.17470245617363" x="-551.0817714369596" y="-112.00490499311132"/>
+              <y:Geometry height="646.5699970975447" width="369.17470245617363" x="-551.0817714369596" y="-94.07339138557683"/>
               <y:Fill color="#F5F5F5" transparent="false"/>
               <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
               <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="38.921875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="t" textColor="#000000" verticalTextPosition="bottom" visible="true" width="369.17470245617363" x="0.0" xml:space="preserve" y="0.0">PieceStrategy
@@ -158,7 +164,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="58.56910108927394" width="339.17470245617363" x="-536.0817714369596" y="-58.083029993111325"/>
+              <y:Geometry height="58.56910108927394" width="339.17470245617363" x="-536.0817714369596" y="-40.15151638557683"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="285.82958984375" x="26.672556306211817" xml:space="preserve" y="3.0">PieceStrategy&lt;PieceType, Command&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -173,7 +179,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="17.110220276350105"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="35.0417338838846"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="214.31689453125" x="62.42890396246182" xml:space="preserve" y="3.0">PieceStrategy&lt;King, White&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -188,7 +194,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="232.1945803001327"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="250.1260939076672"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="220.79150390625" x="59.19159927496182" xml:space="preserve" y="3.0">PieceStrategy&lt;Pawn, White&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -203,7 +209,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="189.1777082953762"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="207.1092219029107"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="217.74462890625" x="60.71503677496182" xml:space="preserve" y="3.0">PieceStrategy&lt;Rook, White&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -218,7 +224,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="146.16083629061967"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="164.09234989815417"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="219.48388671875" x="59.84540786871182" xml:space="preserve" y="3.0">PieceStrategy&lt;Knife, White&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -233,7 +239,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="103.14396428586315"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="121.07547789339765"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="230.82080078125" x="54.17695083746182" xml:space="preserve" y="3.0">PieceStrategy&lt;Bishop, White&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -248,7 +254,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="60.12709228110663"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="78.05860588864113"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="228.42138671875" x="55.37665786871182" xml:space="preserve" y="3.0">PieceStrategy&lt;Queen, White&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -263,7 +269,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="275.21145230488924"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="293.14296591242373"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="210.72412109375" x="64.22529068121182" xml:space="preserve" y="3.0">PieceStrategy&lt;King, Black&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -278,7 +284,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="490.29581232867184"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="508.22732593620634"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="217.19873046875" x="60.98798599371182" xml:space="preserve" y="3.0">PieceStrategy&lt;Pawn, Black&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -293,7 +299,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="447.2789403239153"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="465.2104539314498"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="214.15185546875" x="62.51142349371182" xml:space="preserve" y="3.0">PieceStrategy&lt;Rook, Black&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -308,7 +314,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="404.2620683191588"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="422.1935819266933"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="215.89111328125" x="61.64179458746182" xml:space="preserve" y="3.0">PieceStrategy&lt;Knife, Black&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -323,7 +329,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="361.2451963144023"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="379.1767099219368"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="227.22802734375" x="55.97333755621182" xml:space="preserve" y="3.0">PieceStrategy&lt;Bishop, Black&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -338,7 +344,7 @@
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="318.22832430964576"/>
+              <y:Geometry height="29.26927977576156" width="339.17470245617363" x="-536.0817714369596" y="336.15983791718025"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="224.82861328125" x="57.17304458746182" xml:space="preserve" y="3.0">PieceStrategy&lt;Queen, Black&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
@@ -355,7 +361,7 @@
       <data key="d4" xml:space="preserve"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="229.37316917668318" width="333.9871632856668" x="753.0054897699019" y="-149.32098258527736"/>
+          <y:Geometry height="262.68502171124555" width="333.9871632856668" x="753.0054897699019" y="-165.97690885255855"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="34.265625" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="238.47607421875" x="47.75554453345839" xml:space="preserve" y="3.0">BasicPiece
@@ -364,7 +370,8 @@
             <y:AttributeLabel xml:space="preserve">- m_type: Type
 - m_command: Command
 - m_strategy: PieceStragegy&lt;PieceType&gt;
-- m_board: BasicBoard *</y:AttributeLabel>
+- m_board: BasicBoard *
+- m_moved: bool</y:AttributeLabel>
             <y:MethodLabel xml:space="preserve">enum class Type { }
 enum class Command { }
 
@@ -419,8 +426,7 @@ enum class Command { }
     <edge id="e3" source="n6" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="79.1504456672934" tx="0.0" ty="0.0">
-            <y:Point x="919.9990714127354" y="90.77742312788178"/>
+          <y:Path sx="0.0" sy="125.41182112481755" tx="0.0" ty="0.0">
             <y:Point x="125.41045180293577" y="90.77742312788178"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
