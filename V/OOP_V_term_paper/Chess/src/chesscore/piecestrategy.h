@@ -57,6 +57,32 @@ struct CHESSCORE_EXPORT PieceStrategy<BasicPiece::Type::King, BasicPiece::Comman
         if(nextCol < 8 && nextRow < 8 && !sameCommandPiece(nextRow, nextCol))
             points << QPoint(nextRow, nextCol);
 
+        if(row == 0 && column == 4) {
+            BasicGridCell *kingCell = m_board->cell(row, column);
+            BasicGridCell *rookCell = m_board->cell(row, 7);
+            if(rookCell->piece() != nullptr
+                    && rookCell->piece()->type() == BasicPiece::Type::Rook
+                    && rookCell->piece()->command() == BasicPiece::Command::White
+                    && !rookCell->piece()->moved()
+                    && kingCell->piece() != nullptr
+                    && !kingCell->piece()->moved()
+                    && m_board->cell(row, column + 1)->piece() == nullptr
+                    && m_board->cell(row, column + 2)->piece() == nullptr)
+                points << QPoint(row, column + 2);
+
+            rookCell = m_board->cell(row, 0);
+            if(rookCell->piece() != nullptr
+                    && rookCell->piece()->type() == BasicPiece::Type::Rook
+                    && rookCell->piece()->command() == BasicPiece::Command::White
+                    && !rookCell->piece()->moved()
+                    && kingCell->piece() != nullptr
+                    && !kingCell->piece()->moved()
+                    && m_board->cell(row, column - 1)->piece() == nullptr
+                    && m_board->cell(row, column - 2)->piece() == nullptr
+                    && m_board->cell(row, column - 3)->piece() == nullptr)
+                points << QPoint(row, column - 2);
+        }
+
         return points;
     }
 
@@ -65,7 +91,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::White
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -111,7 +137,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::White
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -174,7 +200,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::White
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -221,7 +247,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::White
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -253,18 +279,22 @@ struct CHESSCORE_EXPORT PieceStrategy<BasicPiece::Type::Pawn, BasicPiece::Comman
     {
         int rowSign = m_board->inverted() ? 1 : -1;
         QList<QPoint> points;
-        BasicGridCell *frontCell = m_board->cell(row - rowSign, column);
-        if(frontCell != nullptr && frontCell->piece() == nullptr)
+        BasicGridCell *cell = m_board->cell(row - rowSign, column);
+        if(cell != nullptr && cell->piece() == nullptr)
             points << QPoint(row - rowSign, column);
 
-        BasicGridCell *leftCell = m_board->cell(row - rowSign, column - 1);
-        if(leftCell != nullptr && leftCell->piece() != nullptr
-                && leftCell->piece()->command() == BasicPiece::Command::Black && !isKing(leftCell))
+        cell = m_board->cell(row - rowSign * 2, column);
+        if(row == 1 && cell != nullptr && cell->piece() == nullptr)
+            points << QPoint(row - rowSign * 2, column);
+
+        cell = m_board->cell(row - rowSign, column - 1);
+        if(cell != nullptr && cell->piece() != nullptr
+                && cell->piece()->command() == BasicPiece::Command::Black && !isKing(cell))
             points << QPoint(row - rowSign, column - 1);
 
-        BasicGridCell *rightCell = m_board->cell(row - rowSign, column + 1);
-        if(rightCell != nullptr &&rightCell->piece() != nullptr
-                && rightCell->piece()->command() == BasicPiece::Command::Black && !isKing(rightCell))
+        cell = m_board->cell(row - rowSign, column + 1);
+        if(cell != nullptr && cell->piece() != nullptr
+                && cell->piece()->command() == BasicPiece::Command::Black && !isKing(cell))
             points << QPoint(row - rowSign, column + 1);
 
         return points;
@@ -324,7 +354,41 @@ struct CHESSCORE_EXPORT PieceStrategy<BasicPiece::Type::King, BasicPiece::Comman
         if(nextCol < 8 && nextRow < 8 && !sameCommandPiece(nextRow, nextCol))
             points << QPoint(nextRow, nextCol);
 
+        if(row == 7 && column == 4) {
+            BasicGridCell *kingCell = m_board->cell(row, column);
+            BasicGridCell *rookCell = m_board->cell(row, 7);
+            if(rookCell->piece() != nullptr
+                    && rookCell->piece()->type() == BasicPiece::Type::Rook
+                    && rookCell->piece()->command() == BasicPiece::Command::Black
+                    && !rookCell->piece()->moved()
+                    && kingCell->piece() != nullptr
+                    && !kingCell->piece()->moved()
+                    && m_board->cell(row, column + 1)->piece() == nullptr
+                    && m_board->cell(row, column + 2)->piece() == nullptr)
+                points << QPoint(row, column + 2);
+
+            rookCell = m_board->cell(row, 0);
+            if(rookCell->piece() != nullptr
+                    && rookCell->piece()->type() == BasicPiece::Type::Rook
+                    && rookCell->piece()->command() == BasicPiece::Command::Black
+                    && !rookCell->piece()->moved()
+                    && kingCell->piece() != nullptr
+                    && !kingCell->piece()->moved()
+                    && m_board->cell(row, column - 1)->piece() == nullptr
+                    && m_board->cell(row, column - 2)->piece() == nullptr
+                    && m_board->cell(row, column - 3)->piece() == nullptr)
+                points << QPoint(row, column - 2);
+        }
+
         return points;
+    }
+
+    bool hasSpecialMoves(int row, int column)
+    {
+        if((row == 7 && column == 6) || (row == 7 && column == 2))
+            return true;
+
+        return false;
     }
 
 private:
@@ -332,7 +396,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::Black
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -379,7 +443,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::Black
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -442,7 +506,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::Black
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -489,7 +553,7 @@ private:
     {
         BasicGridCell *cell = m_board->cell(row, column);
         return cell->piece() != nullptr && (cell->piece()->command() == BasicPiece::Command::Black
-                || cell->piece()->type() == BasicPiece::Type::King);
+                                            || cell->piece()->type() == BasicPiece::Type::King);
     }
 
 private:
@@ -521,18 +585,22 @@ struct CHESSCORE_EXPORT PieceStrategy<BasicPiece::Type::Pawn, BasicPiece::Comman
     {
         int rowSign = m_board->inverted() ? -1 : 1;
         QList<QPoint> points;
-        BasicGridCell *frontCell = m_board->cell(row - rowSign, column);
-        if(frontCell != nullptr && frontCell->piece() == nullptr)
+        BasicGridCell *cell = m_board->cell(row - rowSign, column);
+        if(cell != nullptr && cell->piece() == nullptr)
             points << QPoint(row - rowSign, column);
 
-        BasicGridCell *leftCell = m_board->cell(row - rowSign, column - 1);
-        if(leftCell != nullptr && leftCell->piece() != nullptr
-                && leftCell->piece()->command() == BasicPiece::Command::White && !isKing(leftCell))
+        cell = m_board->cell(row - rowSign * 2, column);
+        if(row == 6 && cell != nullptr && cell->piece() == nullptr)
+            points << QPoint(row - rowSign * 2, column);
+
+        cell = m_board->cell(row - rowSign, column - 1);
+        if(cell != nullptr && cell->piece() != nullptr
+                && cell->piece()->command() == BasicPiece::Command::White && !isKing(cell))
             points << QPoint(row - rowSign, column - 1);
 
-        BasicGridCell *rightCell = m_board->cell(row - rowSign, column + 1);
-        if(rightCell != nullptr && rightCell->piece() != nullptr
-                && rightCell->piece()->command() == BasicPiece::Command::White && !isKing(rightCell))
+        cell = m_board->cell(row - rowSign, column + 1);
+        if(cell != nullptr && cell->piece() != nullptr
+                && cell->piece()->command() == BasicPiece::Command::White && !isKing(cell))
             points << QPoint(row - rowSign, column + 1);
 
         return points;

@@ -8,6 +8,7 @@ BasicPiece::BasicPiece(QQuickItem *parent)
     , m_board(nullptr)
     , m_command(Command::Undefined)
     , m_type(Type::Undefined)
+    , m_moved(false)
 {
 
 }
@@ -61,4 +62,14 @@ void BasicPiece::move(const QRect &geometry)
 void BasicPiece::finishMove()
 {
     m_board->mover()->finishMove(this);
+}
+
+bool BasicPiece::moved() const
+{
+    return m_moved;
+}
+
+void BasicPiece::setMoved(bool newMoved)
+{
+    m_moved = newMoved;
 }

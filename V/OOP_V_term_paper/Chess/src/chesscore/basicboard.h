@@ -4,6 +4,7 @@
 #include <QQuickItem>
 
 #include "chesscore_global.h"
+#include "basicpiece.h"
 
 /*!
  * Базовый компонент шахматной доски

@@ -27,12 +27,11 @@ public:
     virtual void polishContent() override;
 
     BasicPiece *piece() const;
-
     bool selected() const;
-    void setSelected(bool newSelected);
 
 public slots:
     void setPiece(BasicPiece *newPiece);
+    void setSelected(bool newSelected);
 
 signals:
     void pieceChanged(BasicPiece *);

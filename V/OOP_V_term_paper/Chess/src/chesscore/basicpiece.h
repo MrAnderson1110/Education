@@ -32,12 +32,14 @@ public:
 
     Command command() const;
     Type type() const;
+    bool moved() const;
 
     void setBoard(BasicBoard *board);
 
 public slots:
     void setCommand(Command newCommand);
     void setType(Type newType);
+    void setMoved(bool newMoved);
 
     void startMove();
     void move(const QRect &geometry);
@@ -51,6 +53,7 @@ private:
     BasicBoard *m_board;
     Command m_command;
     Type m_type;
+    bool m_moved;
 };
 
 #endif // BASICPIECE_H

@@ -21,15 +21,21 @@ public:
 
     void updateSelection(BasicPiece *piece);
 
+signals:
+    void pawnCanChange(BasicPiece *piece);
+
 private:
     QList<QPoint> getWhiteMoves(BasicPiece *piece) const;
     QList<QPoint> getBlackMoves(BasicPiece *piece) const;
+    void moveRook(const QPoint &newKingPos, BasicPiece *movingPiece);
+    void checkPawn(BasicPiece *movedPiece);
 
 private:
     BasicBoard *m_board;
     BasicPiece *m_movingPiece;
     BasicGridCell *m_preMovingCell;
     QList<BasicGridCell *> m_selectionList;
+    BasicPiece::Command m_currentCommand;
 };
 
 #endif // MOVER_H

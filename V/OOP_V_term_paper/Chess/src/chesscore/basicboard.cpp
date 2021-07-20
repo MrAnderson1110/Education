@@ -1,6 +1,5 @@
 #include "basicboard.h"
 #include "basicgridcell.h"
-#include "basicpiece.h"
 #include "mover.h"
 
 BasicBoard::BasicBoard(QQuickItem *parent)
@@ -19,7 +18,7 @@ void BasicBoard::componentComplete()
     bool hasUncheckedChildren = true;
     while(hasUncheckedChildren) {
         QList<QQuickItem *> newChildren;
-        for(QQuickItem *child : children) {
+        for(QQuickItem *child : qAsConst(children)) {
             if(!child)
                 continue;
 
