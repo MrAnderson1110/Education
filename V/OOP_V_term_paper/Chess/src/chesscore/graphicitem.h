@@ -3,7 +3,9 @@
 
 #include <QQuickItem>
 
-class GraphicItem : public QQuickItem
+#include "chesscore_global.h"
+
+class CHESSCORE_EXPORT GraphicItem : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QQuickItem *background READ background WRITE setBackground NOTIFY backgroundChanged)
