@@ -6,9 +6,9 @@
 BasicPiece::BasicPiece(QQuickItem *parent)
     : GraphicItem(parent)
     , m_board(nullptr)
-    , m_command(Command::Undefined)
-    , m_type(Type::Undefined)
-    , m_moved(false)
+    , m_command(Black)
+    , m_type(Pawn)
+    , m_onFight(false)
 {
 
 }
@@ -32,6 +32,20 @@ BasicPiece::Type BasicPiece::type() const
     return m_type;
 }
 
+void BasicPiece::setType(Type newType)
+{
+    if (m_type == newType)
+        return;
+
+    m_type = newType;
+    emit typeChanged(m_type);
+}
+
+BasicBoard *BasicPiece::board() const
+{
+    return m_board;
+}
+
 void BasicPiece::setBoard(BasicBoard *board)
 {
     if(m_board == board)
@@ -40,13 +54,18 @@ void BasicPiece::setBoard(BasicBoard *board)
     m_board = board;
 }
 
-void BasicPiece::setType(Type newType)
+bool BasicPiece::onFight() const
 {
-    if (m_type == newType)
+    return m_onFight;
+}
+
+void BasicPiece::setOnFight(bool enable)
+{
+    if(m_onFight == enable)
         return;
 
-    m_type = newType;
-    emit typeChanged(m_type);
+    m_onFight = enable;
+    emit onFightChanged(m_onFight);
 }
 
 void BasicPiece::startMove()
@@ -64,12 +83,12 @@ void BasicPiece::finishMove()
     m_board->mover()->finishMove(this);
 }
 
-bool BasicPiece::moved() const
+bool BasicPiece::canMove(int row, int column)
 {
-    return m_moved;
-}
+    BasicGridCell *cell = board()->cell(row, column);    
+    if(!cell)
+        return false;
 
-void BasicPiece::setMoved(bool newMoved)
-{
-    m_moved = newMoved;
+    BasicPiece *piece = cell->piece();
+    return !piece || (piece != nullptr && piece->command() != command());
 }

@@ -9,27 +9,29 @@ BasicBoard {
     property color evenColor: "#8B4513"
     property color oddColor: "#D2B48C"
     property color selectColor: "#629C63"
+    property color onFightColor: "#A52A2A"
+    property color hoveredColor: "#008080"
     property int generalMargin: 20
 
     QtObject {
         id: p
         function mapIndexToLetter(index) {
             switch(index) {
-            case 7:
-                return "A"
-            case 6:
-                return "B"
-            case 5:
-                return "C"
-            case 4:
-                return "D"
-            case 3:
-                return "E"
-            case 2:
-                return "F"
-            case 1:
-                return "G"
             case 0:
+                return "A"
+            case 1:
+                return "B"
+            case 2:
+                return "C"
+            case 3:
+                return "D"
+            case 4:
+                return "E"
+            case 5:
+                return "F"
+            case 6:
+                return "G"
+            case 7:
                 return "H"
             }
         }
@@ -53,7 +55,7 @@ BasicBoard {
                     Layout.fillWidth: true
                     Layout.preferredHeight: generalMargin
                     color: "black"
-                    text: index
+                    text: p.mapIndexToLetter(index)
                     verticalAlignment: Qt.AlignVCenter
                     horizontalAlignment: Qt.AlignHCenter
                 }
@@ -71,7 +73,7 @@ BasicBoard {
                     Layout.fillHeight: true
                     Layout.preferredWidth: generalMargin
                     color: "black"
-                    text: p.mapIndexToLetter(index)
+                    text: 8 - index
                     verticalAlignment: Qt.AlignVCenter
                     horizontalAlignment: Qt.AlignHCenter
                 }
@@ -94,13 +96,15 @@ BasicBoard {
                     oddColor: root.oddColor
                     evenColor: root.evenColor
                     selectColor: root.selectColor
+                    onFightColor: root.onFightColor
+                    hoveredColor: root.hoveredColor
+
                     Layout.row: index / 8
                     Layout.column: (index + 8) % 8
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     rowIndex: Layout.row
                     columnIndex: Layout.column
-
                     MouseArea {
                         anchors.fill: parent
                         onClicked: root.clearSelection()

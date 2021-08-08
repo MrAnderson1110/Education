@@ -1,6 +1,7 @@
 #include "basicboard.h"
 #include "basicgridcell.h"
 #include "mover.h"
+#include "piecestrategy.h"
 
 BasicBoard::BasicBoard(QQuickItem *parent)
     : QQuickItem(parent)
@@ -45,7 +46,9 @@ void BasicBoard::componentComplete()
     for(QList<BasicPiece *>::const_iterator it = m_pieces.cbegin(); it != m_pieces.cend(); ++it)
         initializePiece(*it);
 
-    Q_ASSERT(m_pieces.size() == 32);
+    Q_ASSERT_X(m_pieces.size() == 32,
+               "BasicBoard::componentComplete()",
+               "BasicBoard initialized " + QString::number(m_pieces.size()).toLatin1() + " pieces");
     QQuickItem::componentComplete();
 }
 
@@ -77,12 +80,15 @@ BasicGridCell *BasicBoard::cellUnderMouse(const QPointF &mouse)
     return nullptr;
 }
 
-void BasicBoard::select(int rowIndex, int columnIndex)
+void BasicBoard::select(int rowIndex, int columnIndex, BasicPiece *initiator)
 {
     BasicGridCell *cellForSelect = cell(rowIndex, columnIndex);
 
     if(cellForSelect != nullptr)
         cellForSelect->setSelected(true);
+
+    if(cellForSelect != nullptr && cellForSelect->piece() != nullptr && cellForSelect->piece()->command() != initiator->command())
+        cellForSelect->piece()->setOnFight(true);
 }
 
 void BasicBoard::deselect(int rowIndex, int columnIndex)
@@ -91,6 +97,9 @@ void BasicBoard::deselect(int rowIndex, int columnIndex)
 
     if(cellForDeselect != nullptr)
         cellForDeselect->setSelected(false);
+
+    if(cellForDeselect != nullptr && cellForDeselect->piece() != nullptr)
+        cellForDeselect->piece()->setOnFight(false);
 }
 
 void BasicBoard::clearSelection()
@@ -102,6 +111,7 @@ void BasicBoard::initializePiece(BasicPiece *piece)
 {
     int row = -1;
     int column = -1;
+
     bool isPawn = piece->type() == BasicPiece::Type::Pawn;
 
     switch (piece->command()) {
@@ -111,7 +121,6 @@ void BasicBoard::initializePiece(BasicPiece *piece)
     case BasicPiece::Command::Black:
         row = isPawn ? 6 : 7;
         break;
-    case BasicPiece::Command::Undefined:
     default:
         break;
     }
@@ -122,34 +131,33 @@ void BasicBoard::initializePiece(BasicPiece *piece)
     Q_ASSERT(!m_grid.value(row).isEmpty());
 
     switch(piece->type()) {
-    case BasicPiece::Type::King:
+    case BasicPiece::King:
         column = 4;
         break;
-    case BasicPiece::Type::Queen:
+    case BasicPiece::Queen:
         column = 3;
         break;
-    case BasicPiece::Type::Bishop:
+    case BasicPiece::Bishop:
         if(m_grid.value(row).value(2)->piece() == nullptr)
             column = 2;
         else
             column = 5;
         break;
-    case BasicPiece::Type::Knight:
+    case BasicPiece::Knight:
         if(m_grid.value(row).value(1)->piece() == nullptr)
             column = 1;
         else
             column = 6;
         break;
-    case BasicPiece::Type::Rook:
+    case BasicPiece::Rook:
         if(m_grid.value(row).value(0)->piece() == nullptr)
             column = 0;
         else
             column = 7;
         break;
-    case BasicPiece::Type::Pawn:
+    case BasicPiece::Pawn:
         column = findColumnForPawn(row);
         break;
-    case BasicPiece::Type::Undefined:
     default:
         break;
     }

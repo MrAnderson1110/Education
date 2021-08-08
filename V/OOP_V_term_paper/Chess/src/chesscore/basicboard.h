@@ -29,14 +29,13 @@ public:
 
     BasicGridCell *cell(int rowIndex, int columnIndex);
     BasicGridCell *cellUnderMouse(const QPointF &mouse);
-    void select(int rowIndex, int columnIndex);
+    void select(int rowIndex, int columnIndex, BasicPiece *initiator);
     void deselect(int rowIndex, int columnIndex);
     Q_INVOKABLE void clearSelection();
 
     bool inverted() const;    
     Mover *mover() const;
 
-public slots:
     void setInverted(bool newInverted);
 
 signals:

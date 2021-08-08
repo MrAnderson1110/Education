@@ -5,6 +5,7 @@ BasicGridCell::BasicGridCell(QQuickItem *parent)
     : GraphicItem(parent)
     , m_piece(nullptr)
     , m_selected(false)
+    , m_hovered(false)
 {
 
 }
@@ -54,4 +55,17 @@ void BasicGridCell::setSelected(bool newSelected)
 
     m_selected = newSelected;
     emit selectedChanged(m_selected);
+}
+
+bool BasicGridCell::hovered() const
+{
+    return m_hovered;
+}
+
+void BasicGridCell::setHovered(bool newHovered)
+{
+    if (m_hovered == newHovered)
+        return;
+    m_hovered = newHovered;
+    emit hoveredChanged(m_hovered);
 }

@@ -6,8 +6,8 @@ SOURCES += \
 
 DISTFILES += \
     $$PWD/qml/ChessBoard.qml \
-    $$PWD/qml/ChessPiece.qml \
     $$PWD/qml/ColorizedImage.qml \
     $$PWD/qml/GridCell.qml \
     $$PWD/qml/MoveManipulator.qml \
+    $$PWD/qml/PieceStyle.qml \
     $$PWD/qmldir

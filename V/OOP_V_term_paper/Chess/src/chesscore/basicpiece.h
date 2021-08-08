@@ -10,15 +10,19 @@ class CHESSCORE_EXPORT BasicPiece : public GraphicItem
 {
     Q_OBJECT
     Q_PROPERTY(Command command READ command WRITE setCommand NOTIFY commandChanged)
-    Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(Type type READ type NOTIFY typeChanged)
+    Q_PROPERTY(bool onFight READ onFight NOTIFY onFightChanged)
 
 public:
-    enum class Command { Undefined, White, Black };
+    enum Command
+    {
+        White,
+        Black
+    };
     Q_ENUM(Command)
 
-    enum class Type
+    enum Type
     {
-        Undefined,
         King,
         Queen,
         Knight,
@@ -32,28 +36,34 @@ public:
 
     Command command() const;
     Type type() const;
-    bool moved() const;
+    BasicBoard *board() const;
+    bool onFight() const;
 
+    void setCommand(Command newCommand);
     void setBoard(BasicBoard *board);
+    void setOnFight(bool enable);
 
 public slots:
-    void setCommand(Command newCommand);
-    void setType(Type newType);
-    void setMoved(bool newMoved);
+    virtual void startMove();
+    virtual void move(const QRect &geometry);
+    virtual void finishMove();
+    virtual QList<QPoint> availableMoves() = 0;
 
-    void startMove();
-    void move(const QRect &geometry);
-    void finishMove();
+protected:
+    void setType(Type newType);
+
+    virtual bool canMove(int row, int column);
 
 signals:
     void commandChanged(Command);
     void typeChanged(Type);
+    void onFightChanged(bool);
 
 private:
     BasicBoard *m_board;
     Command m_command;
     Type m_type;
-    bool m_moved;
+    bool m_onFight;
 };
 
 #endif // BASICPIECE_H

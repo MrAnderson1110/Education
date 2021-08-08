@@ -6,17 +6,21 @@ BasicGridCell {
     property color selectColor
     property color oddColor
     property color evenColor
+    property color onFightColor
+    property color hoveredColor
 
     background: Rectangle {
         color: {
-            if(selected)
+            if(!!piece && piece.onFight)
+                return onFightColor
+            else if(selected)
                 return selectColor
-            else if((cell.rowIndex + cell.columnIndex) % 2)
+            else if((rowIndex + columnIndex) % 2)
                 return evenColor
             else
                 return oddColor
         }
-        border.width: 1
-        border.color: "black"
+        border.width: hovered ? 3 : 1
+        border.color: hovered ? hoveredColor : "black"
     }
 }

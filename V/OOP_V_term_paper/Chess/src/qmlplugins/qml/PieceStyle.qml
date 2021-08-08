@@ -3,22 +3,20 @@ import QtQml 2.11
 
 import qmlplugins 1.0
 
-BasicPiece {
+Rectangle {
     id: root
     property color whiteColor: "white"
     property color blackColor: "black"
+    property var piece: null
 
-    background: ColorizedImage {
+    color: "transparent"
+
+    ColorizedImage {
         id: img
-        color: root.command === BasicPiece.White ? whiteColor : blackColor
-        source: p.__mapTypeToIconSource(root.type)
-    }
-
-    QtObject {
-        id: p
-
-        function __mapTypeToIconSource(type) {
-            switch(type) {
+        anchors.fill: parent
+        color: piece.command === BasicPiece.White ? whiteColor : blackColor
+        source: {
+            switch(piece.type) {
             case BasicPiece.King:
                 return "./resources/king.svg"
             case BasicPiece.Queen:
@@ -33,14 +31,13 @@ BasicPiece {
                 return "./resources/pawn.svg"
             }
         }
-    }     
+    }
 
     MoveManipulator {
-        id: moveManiupulator
         anchors.fill: parent
-        piece: root
-        onStarted: root.startMove()
-        onFinsihed: root.finishMove()
-        onMoved: root.move(geometry)
+        basePiece: piece
+        onStarted: if(!!piece) piece.startMove()
+        onMoved: if(!!piece) piece.move(geometry)
+        onFinsihed: if(!!piece) piece.finishMove()
     }
 }
