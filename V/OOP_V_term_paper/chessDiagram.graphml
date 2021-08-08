@@ -69,7 +69,6 @@
     </node>
     <node id="n2" yfiles.foldertype="group">
       <data key="d4" xml:space="preserve"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -155,18 +154,17 @@ enum class Command { }
           <data key="d4" xml:space="preserve"/>
           <data key="d6">
             <y:UMLClassNode>
-              <y:Geometry height="156.83983092783535" width="364.1949501520259" x="-2134.591912565992" y="464.59280024674405"/>
+              <y:Geometry height="121.97758576654502" width="364.1949501520259" x="-2134.591912565992" y="499.4550454080344"/>
               <y:Fill color="#FFCC00" transparent="false"/>
               <y:BorderStyle color="#000000" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="168.24560546875" x="97.97467234163796" xml:space="preserve" y="3.0">PieceStrategy&lt;Pawn&gt;<y:LabelModel><y:SmartNodeLabelModel distance="4.0"/></y:LabelModel><y:ModelParameter><y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="0.0" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/></y:ModelParameter></y:NodeLabel>
               <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-                <y:AttributeLabel xml:space="preserve">- m_midLineCrossed: bool</y:AttributeLabel>
-                <y:MethodLabel xml:space="preserve">+ availableMoves(): QList&lt;QPoint&gt;
+                <y:AttributeLabel xml:space="preserve">- m_moved: bool</y:AttributeLabel>
+                <y:MethodLabel xml:space="preserve">+ availableMoves() override: QList&lt;QPoint&gt;
++ finishMove() override: void
 
-~ midLineCrossed(): bool
-~ setMidLineCrossed(bool): void
-
-+ finishMove(): void override</y:MethodLabel>
+- canMove(int row, int column) override: bool
+</y:MethodLabel>
               </y:UML>
             </y:UMLClassNode>
           </data>
@@ -252,7 +250,6 @@ enum class Command { }
         </node>
         <node id="n2::n8">
           <data key="d4" xml:space="preserve"/>
-          <data key="d5"/>
           <data key="d6">
             <y:UMLNoteNode>
               <y:Geometry height="204.32005898617513" width="336.0895705069124" x="-2373.131437354051" y="-205.03792919396454"/>
@@ -276,7 +273,6 @@ enum class Command { }
         </node>
         <node id="n2::n9">
           <data key="d4" xml:space="preserve"/>
-          <data key="d5"/>
           <data key="d6">
             <y:UMLNoteNode>
               <y:Geometry height="93.74646267281105" width="364.19495015202574" x="-1400.621519917722" y="91.02363150669254"/>
@@ -362,7 +358,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="n2::e0" source="n2::n7" target="n2::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -373,7 +368,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="n2::e1" source="n2::n8" target="n2::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -384,7 +378,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="n2::e2" source="n2::n9" target="n2::n6">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -408,7 +401,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="n2::e4" source="n2::n0" target="n2::n11">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -422,7 +414,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="n2::e5" source="n2::n0" target="n2::n10">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -433,7 +424,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="e1" source="n1" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-105.58886115726284" sy="-44.79304807016155" tx="0.0" ty="0.0">
@@ -447,7 +437,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="e2" source="n3" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-125.51203166417525" ty="43.46659727545983">
@@ -461,7 +450,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="e3" source="n0" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="349.02278461524816" ty="-611.8807768241279"/>
@@ -473,7 +461,6 @@ canEat как заглушку, так как ее движение
       </data>
     </edge>
     <edge id="e4" source="n1" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-142.88208739656034" ty="-572.9683344278146"/>
