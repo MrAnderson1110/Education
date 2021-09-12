@@ -66,6 +66,21 @@ void BasicGridCell::setHovered(bool newHovered)
 {
     if (m_hovered == newHovered)
         return;
+
     m_hovered = newHovered;
     emit hoveredChanged(m_hovered);
+}
+
+bool BasicGridCell::underFire() const
+{
+    return m_underFire;
+}
+
+void BasicGridCell::setUnderFire(bool newUnderFire)
+{
+    if (m_underFire == newUnderFire)
+        return;
+
+    m_underFire = newUnderFire;
+    emit underFireChanged(m_underFire);
 }

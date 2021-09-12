@@ -10,14 +10,14 @@ class CHESSCORE_EXPORT BasicPiece : public GraphicItem
 {
     Q_OBJECT
     Q_PROPERTY(Command command READ command WRITE setCommand NOTIFY commandChanged)
-    Q_PROPERTY(Type type READ type NOTIFY typeChanged)
-    Q_PROPERTY(bool onFight READ onFight NOTIFY onFightChanged)
+    Q_PROPERTY(Type type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(bool movable READ movable WRITE setMovable NOTIFY movableChanged)
 
 public:
     enum Command
     {
-        White,
-        Black
+        White = 1,
+        Black = -1
     };
     Q_ENUM(Command)
 
@@ -34,36 +34,32 @@ public:
 
     explicit BasicPiece(QQuickItem *parent = nullptr);
 
+    bool movable() const;
     Command command() const;
     Type type() const;
     BasicBoard *board() const;
-    bool onFight() const;
 
+    void setMovable(bool newMovable);
     void setCommand(Command newCommand);
     void setBoard(BasicBoard *board);
-    void setOnFight(bool enable);
+    void setType(Type newType);
+
 
 public slots:
     virtual void startMove();
-    virtual void move(const QRect &geometry);
+    virtual void move(const QRectF &geometry);
     virtual void finishMove();
-    virtual QList<QPoint> availableMoves() = 0;
-
-protected:
-    void setType(Type newType);
-
-    virtual bool canMove(int row, int column);
 
 signals:
+    void movableChanged(bool);
     void commandChanged(Command);
     void typeChanged(Type);
-    void onFightChanged(bool);
 
 private:
     BasicBoard *m_board;
     Command m_command;
     Type m_type;
-    bool m_onFight;
+    bool m_movable;
 };
 
 #endif // BASICPIECE_H

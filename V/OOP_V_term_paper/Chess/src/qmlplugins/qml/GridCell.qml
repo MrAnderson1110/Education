@@ -6,13 +6,13 @@ BasicGridCell {
     property color selectColor
     property color oddColor
     property color evenColor
-    property color onFightColor
+    property color underFireColor
     property color hoveredColor
 
     background: Rectangle {
         color: {
             if(!!piece && piece.onFight)
-                return onFightColor
+                return underFireColor
             else if(selected)
                 return selectColor
             else if((rowIndex + columnIndex) % 2)

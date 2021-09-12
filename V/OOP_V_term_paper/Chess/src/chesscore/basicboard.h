@@ -15,7 +15,7 @@
 
 class BasicGridCell;
 class BasicPiece;
-class Mover;
+class GameObserver;
 
 class CHESSCORE_EXPORT BasicBoard : public QQuickItem
 {
@@ -24,18 +24,20 @@ class CHESSCORE_EXPORT BasicBoard : public QQuickItem
 
 public:
     explicit BasicBoard(QQuickItem *parent = nullptr);
+    ~BasicBoard();
 
     virtual void componentComplete() override final;
 
     BasicGridCell *cell(int rowIndex, int columnIndex);
     BasicGridCell *cellUnderMouse(const QPointF &mouse);
-    void select(int rowIndex, int columnIndex, BasicPiece *initiator);
-    void deselect(int rowIndex, int columnIndex);
+    const QList<BasicPiece *> &pieces() const;
+
+    GameObserver *observer() const;
+
+    // Для возможности снимать выделение нажатием на доску из QML
     Q_INVOKABLE void clearSelection();
 
-    bool inverted() const;    
-    Mover *mover() const;
-
+    bool inverted() const;
     void setInverted(bool newInverted);
 
 signals:
@@ -49,7 +51,7 @@ private:
     QHash<int, QHash<int, BasicGridCell *>> m_grid;
     QList<BasicPiece *> m_pieces;
     bool m_inverted;
-    Mover *m_mover;
+    GameObserver *m_observer;
 };
 
 #endif // BASICBOARD_H

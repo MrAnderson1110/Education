@@ -25,165 +25,196 @@ ApplicationWindow {
         id: board
         anchors.fill: parent
 
-        King {
+        BasicPiece {
             id: blackKing
             command: BasicPiece.Black
+            type: BasicPiece.King
             background: PieceStyle { piece: blackKing }
         }
-        Queen {
+        BasicPiece {
             id: blackQueen
             command: BasicPiece.Black
+            type: BasicPiece.Queen
             background: PieceStyle { piece: blackQueen }
         }
-        Bishop {
+        BasicPiece {
             id: blackBishop_1
             command: BasicPiece.Black
+            type: BasicPiece.Bishop
             background: PieceStyle { piece: blackBishop_1 }
         }
-        Bishop {
+        BasicPiece {
             id: blackBishop_2
             command: BasicPiece.Black
+            type: BasicPiece.Bishop
             background: PieceStyle { piece: blackBishop_2 }
         }
-        Knight {
+        BasicPiece {
             id: blackKnight_1
             command: BasicPiece.Black
+            type: BasicPiece.Knight
             background: PieceStyle { piece: blackKnight_1 }
         }
-        Knight {
+        BasicPiece {
             id: blackKnight_2
             command: BasicPiece.Black
+            type: BasicPiece.Knight
             background: PieceStyle { piece: blackKnight_2 }
         }
-        Rook {
+        BasicPiece {
             id: blackRook_1
             command: BasicPiece.Black
+            type: BasicPiece.Rook
             background: PieceStyle { piece: blackRook_1 }
         }
-        Rook {
+        BasicPiece {
             id: blackRook_2
             command: BasicPiece.Black
+            type: BasicPiece.Rook
             background: PieceStyle { piece: blackRook_2 }
         }
-        Pawn {
+        BasicPiece {
             id: blackRookPawn_1
             command: BasicPiece.Black
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: blackRookPawn_1 }
         }
-        Pawn {
+        BasicPiece {
             id: blackRookPawn_2
             command: BasicPiece.Black
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: blackRookPawn_2 }
         }
-        Pawn {
+        BasicPiece {
             id: blackBishopPawn_1
             command: BasicPiece.Black
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: blackBishopPawn_1 }
         }
-        Pawn {
+        BasicPiece {
             id: blackBishopPawn_2
             command: BasicPiece.Black
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: blackBishopPawn_2 }
         }
-        Pawn {
+        BasicPiece {
             id: blackKnightPawn_1
             command: BasicPiece.Black
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: blackKnightPawn_1 }
         }
-        Pawn {
+        BasicPiece {
             id: blackKnightPawn_2
             command: BasicPiece.Black
             background: PieceStyle { piece: blackKnightPawn_2 }
         }
-        Pawn {
+        BasicPiece {
             id: blackQueenPawn
             command: BasicPiece.Black
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: blackQueenPawn }
         }
-        Pawn {
+        BasicPiece {
             id: blackKingPawn
             command: BasicPiece.Black
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: blackKingPawn }
         }
 
-        King {
+        BasicPiece {
             id: whiteKing
             command: BasicPiece.White
+            type: BasicPiece.King
             background: PieceStyle { piece: whiteKing }
         }
-        Queen {
+        BasicPiece {
             id: whiteQueen
             command: BasicPiece.White
+            type: BasicPiece.Queen
             background: PieceStyle { piece: whiteQueen }
         }
-        Bishop {
+        BasicPiece {
             id: whiteBishop_1
             command: BasicPiece.White
+            type: BasicPiece.Bishop
             background: PieceStyle { piece: whiteBishop_1 }
         }
-        Bishop {
+        BasicPiece {
             id: whiteBishop_2
             command: BasicPiece.White
+            type: BasicPiece.Bishop
             background: PieceStyle { piece: whiteBishop_2 }
         }
-        Knight {
+        BasicPiece {
             id: whiteKnight_1
             command: BasicPiece.White
+            type: BasicPiece.Knight
             background: PieceStyle { piece: whiteKnight_1 }
         }
-        Knight {
+        BasicPiece {
             id: whiteKnight_2
             command: BasicPiece.White
+            type: BasicPiece.Knight
             background: PieceStyle { piece: whiteKnight_2 }
         }
-        Rook {
+        BasicPiece {
             id: whiteRook_1
             command: BasicPiece.White
+            type: BasicPiece.Rook
             background: PieceStyle { piece: whiteRook_1 }
         }
-        Rook {
+        BasicPiece {
             id: whiteRook_2
             command: BasicPiece.White
+            type: BasicPiece.Rook
             background: PieceStyle { piece: whiteRook_2 }
         }
-        Pawn {
+        BasicPiece {
             id: whiteRookPawn_1
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteRookPawn_1 }
         }
-        Pawn {
+        BasicPiece {
             id: whiteRookPawn_2
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteRookPawn_2 }
         }
-        Pawn {
+        BasicPiece {
             id: whiteBishopPawn_1
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteBishopPawn_1 }
         }
-        Pawn {
+        BasicPiece {
             id: whiteBishopPawn_2
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteBishopPawn_2 }
         }
-        Pawn {
+        BasicPiece {
             id: whiteKnightPawn_1
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteKnightPawn_1 }
         }
-        Pawn {
+        BasicPiece {
             id: whiteKnightPawn_2
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteKnightPawn_2 }
         }
-        Pawn {
+        BasicPiece {
             id: whiteQueenPawn
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteQueenPawn }
         }
-        Pawn {
+        BasicPiece {
             id: whiteKingPawn
             command: BasicPiece.White
+            type: BasicPiece.Pawn
             background: PieceStyle { piece: whiteKingPawn }
         }
     }

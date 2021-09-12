@@ -9,7 +9,7 @@ BasicBoard {
     property color evenColor: "#8B4513"
     property color oddColor: "#D2B48C"
     property color selectColor: "#629C63"
-    property color onFightColor: "#A52A2A"
+    property color underFireColor: "#A52A2A"
     property color hoveredColor: "#008080"
     property int generalMargin: 20
 
@@ -96,7 +96,7 @@ BasicBoard {
                     oddColor: root.oddColor
                     evenColor: root.evenColor
                     selectColor: root.selectColor
-                    onFightColor: root.onFightColor
+                    underFireColor: root.underFireColor
                     hoveredColor: root.hoveredColor
 
                     Layout.row: index / 8

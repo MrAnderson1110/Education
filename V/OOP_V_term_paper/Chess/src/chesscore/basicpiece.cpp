@@ -1,14 +1,14 @@
 #include "basicpiece.h"
 #include "basicgridcell.h"
 #include "basicboard.h"
-#include "mover.h"
+#include "gameobserver.h"
 
 BasicPiece::BasicPiece(QQuickItem *parent)
     : GraphicItem(parent)
     , m_board(nullptr)
     , m_command(Black)
     , m_type(Pawn)
-    , m_onFight(false)
+    , m_movable(true)
 {
 
 }
@@ -54,41 +54,31 @@ void BasicPiece::setBoard(BasicBoard *board)
     m_board = board;
 }
 
-bool BasicPiece::onFight() const
-{
-    return m_onFight;
-}
-
-void BasicPiece::setOnFight(bool enable)
-{
-    if(m_onFight == enable)
-        return;
-
-    m_onFight = enable;
-    emit onFightChanged(m_onFight);
-}
-
 void BasicPiece::startMove()
 {
-    m_board->mover()->startMove(this);
+    m_board->observer()->startMove(this);
 }
 
-void BasicPiece::move(const QRect &geometry)
+void BasicPiece::move(const QRectF &geometry)
 {
-    m_board->mover()->move(this, geometry);
+    m_board->observer()->move(this, geometry);
 }
 
 void BasicPiece::finishMove()
 {
-    m_board->mover()->finishMove(this);
+    m_board->observer()->finishMove(this);
 }
 
-bool BasicPiece::canMove(int row, int column)
+bool BasicPiece::movable() const
 {
-    BasicGridCell *cell = board()->cell(row, column);    
-    if(!cell)
-        return false;
+    return m_movable;
+}
 
-    BasicPiece *piece = cell->piece();
-    return !piece || (piece != nullptr && piece->command() != command());
+void BasicPiece::setMovable(bool newMovable)
+{
+    if (m_movable == newMovable)
+        return;
+
+    m_movable = newMovable;
+    emit movableChanged(m_movable);
 }

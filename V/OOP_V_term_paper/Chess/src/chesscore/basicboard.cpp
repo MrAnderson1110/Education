@@ -1,16 +1,20 @@
 #include "basicboard.h"
 #include "basicgridcell.h"
-#include "mover.h"
-#include "piecestrategy.h"
+#include "gameobserver.h"
 
 BasicBoard::BasicBoard(QQuickItem *parent)
     : QQuickItem(parent)
     , m_grid()
     , m_pieces()
     , m_inverted(false)
-    , m_mover(new Mover(this))
+    , m_observer(new GameObserver(this))
 {
 
+}
+
+BasicBoard::~BasicBoard()
+{
+    delete m_observer;
 }
 
 void BasicBoard::componentComplete()
@@ -25,8 +29,8 @@ void BasicBoard::componentComplete()
 
             BasicGridCell *cell = qobject_cast<BasicGridCell *>(child);
             BasicPiece *piece = qobject_cast<BasicPiece *>(child);
+
             if(cell != nullptr && m_grid[cell->rowIndex()][cell->columnIndex()] == nullptr) {
-                Q_ASSERT(cell != nullptr);
                 m_grid[cell->rowIndex()][cell->columnIndex()] = cell;
                 continue;
             }
@@ -78,33 +82,6 @@ BasicGridCell *BasicBoard::cellUnderMouse(const QPointF &mouse)
     }
 
     return nullptr;
-}
-
-void BasicBoard::select(int rowIndex, int columnIndex, BasicPiece *initiator)
-{
-    BasicGridCell *cellForSelect = cell(rowIndex, columnIndex);
-
-    if(cellForSelect != nullptr)
-        cellForSelect->setSelected(true);
-
-    if(cellForSelect != nullptr && cellForSelect->piece() != nullptr && cellForSelect->piece()->command() != initiator->command())
-        cellForSelect->piece()->setOnFight(true);
-}
-
-void BasicBoard::deselect(int rowIndex, int columnIndex)
-{
-    BasicGridCell *cellForDeselect = cell(rowIndex, columnIndex);
-
-    if(cellForDeselect != nullptr)
-        cellForDeselect->setSelected(false);
-
-    if(cellForDeselect != nullptr && cellForDeselect->piece() != nullptr)
-        cellForDeselect->piece()->setOnFight(false);
-}
-
-void BasicBoard::clearSelection()
-{
-    m_mover->updateSelection(nullptr);
 }
 
 void BasicBoard::initializePiece(BasicPiece *piece)
@@ -188,9 +165,19 @@ int BasicBoard::findColumnForPawn(int row)
     return -1;
 }
 
-Mover *BasicBoard::mover() const
+GameObserver *BasicBoard::observer() const
 {
-    return m_mover;
+    return m_observer;
+}
+
+void BasicBoard::clearSelection()
+{
+    m_observer->clearSelection();
+}
+
+const QList<BasicPiece *> &BasicBoard::pieces() const
+{
+    return m_pieces;
 }
 
 bool BasicBoard::inverted() const
