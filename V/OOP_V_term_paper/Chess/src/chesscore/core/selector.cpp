@@ -15,8 +15,10 @@ Selector::Selector(BasicBoard *board)
 
 void Selector::updateSelection(BasicPiece *piece, const QList<QPoint> &availableMoves)
 {
-    for(BasicGridCell *cell : qAsConst(m_selectionList))
+    for(BasicGridCell *cell : qAsConst(m_selectionList)) {
         cell->setSelected(false);
+        cell->setUnderFire(false);
+    }
 
     m_selectionList.clear();
     if(!piece) {
@@ -35,8 +37,15 @@ void Selector::updateSelection(BasicPiece *piece, const QList<QPoint> &available
                    " column " + QString::number(p.y()).toLatin1() +
                    " is not available for piece type: " + QString::number(piece->type()).toLatin1());
 
-        m_selectionList.append(cell);
-        cell->setSelected(true);
+        BasicPiece *cellPiece = cell->piece();
+        if(cellPiece == nullptr || cell->piece() == piece) {
+            m_selectionList.append(cell);
+            cell->setSelected(true);
+        }
+        else if(cellPiece->command() != piece->command()) {
+            m_selectionList.append(cell);
+            cell->setUnderFire(true);
+        }
     }
 }
 

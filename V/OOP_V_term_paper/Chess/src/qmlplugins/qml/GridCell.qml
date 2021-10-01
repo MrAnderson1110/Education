@@ -11,7 +11,7 @@ BasicGridCell {
 
     background: Rectangle {
         color: {
-            if(!!piece && piece.onFight)
+            if(underFire)
                 return underFireColor
             else if(selected)
                 return selectColor

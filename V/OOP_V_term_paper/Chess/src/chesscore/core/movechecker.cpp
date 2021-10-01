@@ -226,16 +226,12 @@ void MoveChecker::rookFilter(MoveDesctiption &description)
 
         Move minValue = Move(description.initiator->rowIndex(), description.initiator->columnIndex());
         Move maxValue = *std::max_element(it->begin(), it->end(), compFunc);
-        while(true) {
+        while(minValue != maxValue) {
             // Следующее значение в порядке обхода по данному направлению
-            Move nextValue = get_next(minValue, maxValue, it.value(), compFunc);
-            if(m_board->cell(nextValue.x(), nextValue.y())->piece() != nullptr)
-                break;
-            else
-                filteredMoves[it.key()] << nextValue;
-
-            minValue = nextValue;
-            if(nextValue == maxValue)
+            minValue = get_next(minValue, maxValue, it.value(), compFunc);
+            filteredMoves[it.key()] << minValue;
+            BasicPiece *piece = m_board->cell(minValue.x(), minValue.y())->piece();
+            if(piece != nullptr)
                 break;
         }
     }
