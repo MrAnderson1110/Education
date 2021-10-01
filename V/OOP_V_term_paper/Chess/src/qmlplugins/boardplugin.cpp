@@ -2,9 +2,18 @@
 
 #include <QtQml>
 
+#include <AbstractVisitor>
+
 #include <BasicBoard>
 #include <BasicGridCell>
 #include <BasicPiece>
+
+#include <King>
+#include <Queen>
+#include <Bishop>
+#include <Knight>
+#include <Rook>
+#include <Pawn>
 
 void BoardPlugin::registerTypes(const char *uri)
 {
@@ -12,5 +21,13 @@ void BoardPlugin::registerTypes(const char *uri)
 
     qmlRegisterType<BasicBoard>(uri, 1, 0, "BasicBoard");
     qmlRegisterType<BasicGridCell>(uri, 1, 0, "BasicGridCell");
-    qmlRegisterType<BasicPiece>(uri, 1, 0, "BasicPiece");
+
+    qmlRegisterUncreatableType<BasicPiece>(uri, 1, 0, "BasicPiece", "must be create from C++ only");
+
+    qmlRegisterType<King>(uri, 1, 0, "King");
+    qmlRegisterType<Queen>(uri, 1, 0, "Queen");
+    qmlRegisterType<Bishop>(uri, 1, 0, "Bishop");
+    qmlRegisterType<Knight>(uri, 1, 0, "Knight");
+    qmlRegisterType<Rook>(uri, 1, 0, "Rook");
+    qmlRegisterType<Pawn>(uri, 1, 0, "Pawn");
 }

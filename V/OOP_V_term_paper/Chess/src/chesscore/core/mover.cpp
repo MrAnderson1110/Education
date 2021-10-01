@@ -1,7 +1,8 @@
 #include "mover.h"
-#include "basicboard.h"
-#include "basicgridcell.h"
-#include "basicpiece.h"
+
+#include "../gui/basicboard.h"
+#include "../gui/basicgridcell.h"
+#include "../gui/basicpiece.h"
 
 #include <QCursor>
 

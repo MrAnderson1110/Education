@@ -3,9 +3,12 @@
 
 #include <QQuickItem>
 
-#include "chesscore_global.h"
+#include "../core/basevisitor.h"
 
-class CHESSCORE_EXPORT GraphicItem : public QQuickItem
+// NOTE так как у нас устаявшаяся система классов фигур,
+// самый простой вариант управлять графикой - обход коллекции фигур и клеток
+
+class CHESSCORE_EXPORT GraphicItem : public QQuickItem, public BaseVisitable<void>
 {
     Q_OBJECT
     Q_PROPERTY(QQuickItem *background READ background WRITE setBackground NOTIFY backgroundChanged)

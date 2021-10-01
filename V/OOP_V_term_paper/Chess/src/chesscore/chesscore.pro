@@ -14,8 +14,10 @@ TARGET = $${PRO_NAME}
 QT += core qml quick
 
 include($${PRO_NAME}.pri)
+include(gui/gui.pri)
+include(core/core.pri)
 
-INCLUDEPATH += $${SRC_DIR}/$${PRO_NAME}
+INCLUDEPATH += $${SRC_DIR}/$${PRO_NAME}/include
 
 #------------------------------------------------------------------------------#
 

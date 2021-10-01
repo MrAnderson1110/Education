@@ -1,7 +1,8 @@
 #include "selector.h"
-#include "basicboard.h"
-#include "basicpiece.h"
-#include "basicgridcell.h"
+
+#include "../gui/basicboard.h"
+#include "../gui/basicpiece.h"
+#include "../gui/basicgridcell.h"
 
 Selector::Selector(BasicBoard *board)
     : m_board(board)
@@ -37,6 +38,14 @@ void Selector::updateSelection(BasicPiece *piece, const QList<QPoint> &available
         m_selectionList.append(cell);
         cell->setSelected(true);
     }
+}
+
+QPoint Selector::hoveredPoint() const
+{
+    if(!m_hoveredCell)
+        return { -1, -1 };
+
+    return { m_hoveredCell->rowIndex(), m_hoveredCell->columnIndex() };
 }
 
 void Selector::updateHover(const QRectF &pieceGeometry)

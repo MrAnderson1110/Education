@@ -1,5 +1,5 @@
-#ifndef GAMEOBSERVER_H
-#define GAMEOBSERVER_H
+#ifndef GAMEMEDIATOR_H
+#define GAMEMEDIATOR_H
 
 #include <QRectF>
 #include <memory>
@@ -11,12 +11,13 @@ class BasicPiece;
 class Selector;
 class Mover;
 class MoveChecker;
+class VisitorsHandler;
 
-class CHESSCORE_EXPORT GameObserver
+class CHESSCORE_EXPORT GameMediator
 {
 public:
-    explicit GameObserver(BasicBoard *board);
-    ~GameObserver();
+    explicit GameMediator(BasicBoard *board);
+    ~GameMediator();
 
     void startMove(BasicPiece *piece);
     void move(BasicPiece *piece, const QRectF &geometry);
@@ -29,6 +30,7 @@ private:
     Mover *m_mover;
     Selector *m_selector;
     MoveChecker *m_moveChecker;
+    VisitorsHandler *handler;
 };
 
-#endif // GAMEOBSERVER_H
+#endif // GAMEMEDIATOR_H

@@ -17,6 +17,7 @@ public:
     void updateHover(const QRectF &pieceGeometry);
     /// piece === nullptr - сбрасывает все выделение
     void updateSelection(BasicPiece *piece, const QList<QPoint> &availableMoves = QList<QPoint>());
+    QPoint hoveredPoint() const;
 
 private:
     BasicBoard *m_board;
