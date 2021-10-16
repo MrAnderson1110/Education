@@ -20,6 +20,9 @@ public:
     virtual ReturnType visit(T *) = 0;
 };
 
+template<class T>
+void (*base_exept_func)(T *visited, BaseVisitor *visitor) = nullptr;
+
 template<typename R = void>
 class CHESSCORE_EXPORT BaseVisitable
 {
@@ -30,19 +33,25 @@ public:
 
 protected:
     template<class T>
-    static ReturnType acceptImpl(T *visited, BaseVisitor *visitor)
+    static ReturnType acceptImpl(T *visited,
+                                 BaseVisitor *visitor,
+                                 void (*exept_func)(T *, BaseVisitor *))
     {
         Visitor<T> *castedVisitor = dynamic_cast<Visitor<T> *>(visitor);
-        if(!castedVisitor)
-            return ReturnType();
+        if(!castedVisitor) {
+            if(exept_func)
+                return exept_func(visited, visitor);
 
-        castedVisitor->visit(visited);
+            return ReturnType();
+        }
+
+        return castedVisitor->visit(visited);
     }
 };
 
-#define MAKE_VISITABLE() \
+#define MAKE_VISITABLE(exept_func) \
     virtual ReturnType accept(BaseVisitor *visitor) override { \
-        return acceptImpl(this, visitor); \
+    return acceptImpl(this, visitor, exept_func); \
     }
 
 #endif // BASEVISITOR_H

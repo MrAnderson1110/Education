@@ -23,7 +23,7 @@ class CHESSCORE_EXPORT BasicGridCell : public GraphicItem
     Q_PROPERTY(bool underFire READ underFire WRITE setUnderFire NOTIFY underFireChanged)
 
 public:
-    MAKE_VISITABLE()
+    MAKE_VISITABLE(base_exept_func<BasicGridCell>)
 
     explicit BasicGridCell(QQuickItem *parent = nullptr);
 

@@ -47,7 +47,7 @@ private:
     QHash<int, QHash<int, BasicGridCell *>> m_grid;
     QList<BasicPiece *> m_pieces;
     bool m_inverted;
-    GameMediator *m_observer;
+    GameMediator *m_mediator;
 };
 
 #endif // BASICBOARD_H

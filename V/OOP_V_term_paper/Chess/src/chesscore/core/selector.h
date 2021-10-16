@@ -9,6 +9,8 @@ class BasicBoard;
 class BasicPiece;
 class BasicGridCell;
 
+struct MoveDesctiption;
+
 class CHESSCORE_EXPORT Selector
 {
 public:
@@ -16,12 +18,11 @@ public:
 
     void updateHover(const QRectF &pieceGeometry);
     /// piece === nullptr - сбрасывает все выделение
-    void updateSelection(BasicPiece *piece, const QList<QPoint> &availableMoves = QList<QPoint>());
+    void updateSelection(BasicPiece *initiator);
     QPoint hoveredPoint() const;
 
 private:
     BasicBoard *m_board;
-    BasicPiece *m_selectionPiece;
     BasicGridCell *m_hoveredCell;
     QList<BasicGridCell *> m_selectionList;
 };

@@ -3,6 +3,15 @@
 
 #include "graphicitem.h"
 
+template<class T>
+void exept_func(T *visited, BaseVisitor *visitor)
+{
+    Visitor<BasicPiece> *castedVisitor = dynamic_cast<Visitor<BasicPiece> *>(visitor);
+    if(!castedVisitor)
+        return;
+    castedVisitor->visit(visited);
+}
+
 class BasicBoard;
 
 class CHESSCORE_EXPORT BasicPiece : public GraphicItem
@@ -13,7 +22,7 @@ class CHESSCORE_EXPORT BasicPiece : public GraphicItem
     Q_PROPERTY(bool movable READ movable WRITE setMovable NOTIFY movableChanged)
 
 public:
-    MAKE_VISITABLE()
+    MAKE_VISITABLE(base_exept_func<BasicPiece>)
 
     enum Command
     {
@@ -45,6 +54,25 @@ public:
     void setBoard(BasicBoard *board);
     void setType(Type newType);
 
+    const FightMoves &fightMoves() const;
+    void setFightMoves(const FightMoves &moves);
+    void addFigntMove(const FightPair &move);
+    void removeFightMove(const Move &move);
+    void removeFightMove(BasicPiece *piece);
+    void removeFightMove(const FightPair &move);
+    bool fightMovesContains(const Move &move);
+    bool fightMovesContains(BasicPiece *piece);
+
+    const AvailableMoves &availableMoves() const;
+    void setAvailableMoves(const AvailableMoves &moves);
+    void addAvailableMove(const Move &move, MoveDirection dir);
+    bool availableMovesContains(const Move &move);
+    void removeAvailableMove(const Move &move);
+
+    const Moves &predictedMoves() const;
+    void setPredictedMoves(const Moves &moves);
+    bool predictedMovesContains(const Move &move);
+
 public slots:
     virtual void startMove();
     virtual void move(const QRectF &geometry);
@@ -59,6 +87,10 @@ private:
     BasicBoard *m_board;
     Command m_command;
     Type m_type;
+    FightMoves m_fightMoves;
+    AvailableMoves m_availableMoves;
+    Moves m_predictedMoves;
+//    AvailableMoves m_fullMoves;
     bool m_movable;
 };
 

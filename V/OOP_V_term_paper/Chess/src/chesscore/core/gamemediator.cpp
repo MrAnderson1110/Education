@@ -2,10 +2,9 @@
 #include "mover.h"
 #include "selector.h"
 #include "movechecker.h"
+#include "appstate.h"
 
-#include "../gui/basicboard.h"
-
-#define UNDEFINED_GEOMETRY QRectF(-1, -1, 0, 0)
+#include <BasicBoard>
 
 GameMediator::GameMediator(BasicBoard *board)
     : m_board(board)
@@ -23,37 +22,65 @@ GameMediator::~GameMediator()
     delete m_mover;
 }
 
+void GameMediator::initialize()
+{
+    m_moveChecker->updateAvailableMoves();
+}
+
 void GameMediator::startMove(BasicPiece *piece)
 {
-    QList<QPoint> moves = m_moveChecker->filteredMoves(piece);
-    m_selector->updateSelection(piece, moves);
+    if(piece->command() != appState->currentCommand())
+        return;
+
+    m_selector->updateSelection(piece);
     m_selector->updateHover(piece->geometry());
     m_mover->startMove(piece);
 }
 
 void GameMediator::move(BasicPiece *piece, const QRectF &geometry)
 {
+    if(piece->command() != appState->currentCommand())
+        return;
+
     m_selector->updateHover(geometry);
     m_mover->move(piece, geometry);
 }
 
 void GameMediator::finishMove(BasicPiece *piece)
 {
-    QPoint finishPoint = m_selector->hoveredPoint();
-    QList<QPoint> moves = m_moveChecker->filteredMoves(piece);
+    if(piece->command() != appState->currentCommand())
+        return;
 
-    if(!moves.contains(finishPoint)) {
-        m_mover->resetPosition(piece);
+    Move targetPoint = m_selector->hoveredPoint();
+    Move sourcePoint(piece->rowIndex(), piece->columnIndex());
+
+    m_mover->finishMove(piece);
+    if(!piece->availableMovesContains(targetPoint)
+            || targetPoint == sourcePoint) {
+        m_mover->reset();
         return;
     }
 
-    m_mover->finishMove(piece);
     clearSelection();
+    m_moveChecker->updateAvailableMoves(piece, sourcePoint);
+    chooseCommand();
 }
 
 void GameMediator::clearSelection()
 {
     m_selector->updateSelection(nullptr);
-    m_selector->updateHover(UNDEFINED_GEOMETRY);
+    m_selector->updateHover(INVALID_GEOMETRY);
+}
+
+void GameMediator::chooseCommand()
+{
+    switch (appState->currentCommand()) {
+    case BasicPiece::White:
+        appState->setCurrentCommand(BasicPiece::Black);
+        break;
+    case BasicPiece::Black:
+        appState->setCurrentCommand(BasicPiece::White);
+        break;
+    }
 }
 

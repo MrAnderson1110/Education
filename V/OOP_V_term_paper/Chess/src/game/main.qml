@@ -31,6 +31,7 @@ ApplicationWindow {
             background: PieceStyle { piece: blackRook_1 }
             rowIndex: 7
             columnIndex: 0
+            moved: false
         }
         Knight {
             id: blackKnight_1
@@ -59,6 +60,7 @@ ApplicationWindow {
             background: PieceStyle { piece: blackKing }
             rowIndex: 7
             columnIndex: 4
+            moved: false
         }
         Bishop {
             id: blackBishop_2
@@ -80,6 +82,7 @@ ApplicationWindow {
             background: PieceStyle { piece: blackRook_2 }
             rowIndex: 7
             columnIndex: 7
+            moved: false
         }
 
         Pawn {
@@ -145,6 +148,7 @@ ApplicationWindow {
             background: PieceStyle { piece: whiteRook_1 }
             rowIndex: 0
             columnIndex: 0
+            moved: false
         }
         Knight {
             id: whiteKnight_1
@@ -173,6 +177,7 @@ ApplicationWindow {
             background: PieceStyle { piece: whiteKing }
             rowIndex: 0
             columnIndex: 4
+            moved: false
         }
         Bishop {
             id: whiteBishop_2
@@ -194,6 +199,7 @@ ApplicationWindow {
             background: PieceStyle { piece: whiteRook_2 }
             rowIndex: 0
             columnIndex: 7
+            moved: false
         }
 
         Pawn {

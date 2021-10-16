@@ -3,66 +3,30 @@
 
 #include <QList>
 
-#include <tuple>
-
 #include "chesscore_global.h"
 
 class BasicBoard;
 class BasicPiece;
-
-typedef QPoint Move;
-typedef QList<Move> Moves;
+class MovesVisitor;
+class FilterVisitor;
+class FightVisitor;
+class PostFilterVisitor;
 
 class CHESSCORE_EXPORT MoveChecker
 {
-    typedef QHash<int, Moves> MovesDirectionHash;
-
-    struct CHESSCORE_EXPORT MoveDesctiption
-    {
-        // Направление обхода позиций от startPoint
-        enum Direction
-        {
-            StartPoint,     // { piece pos point }
-            TopLeft,        // { startPoint - 1, startPoint - 1 } -> column - 1 && row - 1
-            Top,            // { startPoint - 1, startPoint     } -> column - 1 && row
-            TopRight,       // { startPoint - 1, startPoint + 1 } -> column - 1 && row + 1
-            Right,          // { startPoint,     startPoint + 1 } -> column     && row + 1
-            BottomRight,    // { startPoint + 1, startPoint + 1 } -> column + 1 && row + 1
-            Bottom,         // { startPoint + 1, startPoint     } -> column + 1 && row
-            BottomLeft,     // { startPoint + 1, startPoint - 1 } -> column + 1 && row - 1
-            Left            // { startPoint ,    startPoint - 1 } -> column     && row - 1
-        };
-
-        BasicPiece *initiator;
-        MovesDirectionHash availableMoves;
-    };
-
-    typedef MoveDesctiption::Direction Direction;
-
 public:
     explicit MoveChecker(BasicBoard *board);
+    ~MoveChecker();
 
-    Moves filteredMoves(BasicPiece *piece);
-
-private:
-    MoveDesctiption rawDesctiption(BasicPiece *piece);
-
-    void kingFilter(MoveDesctiption &king);
-    void queenFilter(MoveDesctiption &queen);
-    void bishopFilter(MoveDesctiption &bishop);
-    void knightFilter(MoveDesctiption &knight);
-    void rookFilter(MoveDesctiption &rook);
-    void pawnFilter(MoveDesctiption &pawn);
-
-    void kingRawMoves(MoveDesctiption &piece);
-    void queenRawMoves(MoveDesctiption &piece);
-    void bishopRawMoves(MoveDesctiption &piece);
-    void knightRawMoves(MoveDesctiption &piece);
-    void rookRawMoves(MoveDesctiption &piece);
-    void pawnRawMoves(MoveDesctiption &piece);
+    void updateAvailableMoves(BasicPiece *initiator = nullptr,
+                              const Move &sourcePoint = INVALID_POINT);
 
 private:
     BasicBoard *m_board;
+    MovesVisitor *m_movesVisitor;
+    FilterVisitor *m_filterVisitor;
+    FightVisitor *m_fightVisitor;
+    PostFilterVisitor *m_postFilterVisitor;
 };
 
 #endif // MOVECHECKER_H

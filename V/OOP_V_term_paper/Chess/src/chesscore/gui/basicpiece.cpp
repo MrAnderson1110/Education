@@ -9,6 +9,8 @@ BasicPiece::BasicPiece(QQuickItem *parent)
     , m_board(nullptr)
     , m_command(Black)
     , m_type(Pawn)
+    , m_fightMoves()
+    , m_availableMoves()
     , m_movable(true)
 {
 
@@ -42,16 +44,126 @@ void BasicPiece::setType(Type newType)
     emit typeChanged(m_type);
 }
 
+void BasicPiece::setFightMoves(const FightMoves &moves)
+{
+    m_fightMoves = moves;
+}
+
+void BasicPiece::addFigntMove(const FightPair &move)
+{
+    if(m_fightMoves.contains(move))
+        return;
+
+    m_fightMoves << move;
+}
+
+void BasicPiece::removeFightMove(const Move &move)
+{
+    FightPair moveForRemote = { nullptr, INVALID_POINT };
+    for(const FightPair &fightMove : qAsConst(m_fightMoves))
+        if(fightMove.second == move) {
+            moveForRemote = fightMove;
+            break;
+        }
+
+    m_fightMoves.removeOne(moveForRemote);
+}
+
+void BasicPiece::removeFightMove(BasicPiece *initiator)
+{
+    FightPair moveForRemote = { nullptr, INVALID_POINT };
+    for(const FightPair &fightMove : qAsConst(m_fightMoves))
+        if(fightMove.first == initiator) {
+            moveForRemote = fightMove;
+            break;
+        }
+
+    m_fightMoves.removeOne(moveForRemote);
+}
+
+void BasicPiece::removeFightMove(const FightPair &move)
+{
+    m_fightMoves.removeOne(move);
+}
+
+bool BasicPiece::fightMovesContains(const Move &move)
+{
+    for(const FightPair &fightMove : qAsConst(m_fightMoves))
+        if(fightMove.second == move)
+            return true;
+
+    return false;
+}
+
+bool BasicPiece::fightMovesContains(BasicPiece *piece)
+{
+    for(const FightPair &fightMove : qAsConst(m_fightMoves))
+        if(fightMove.first == piece)
+            return true;
+
+    return false;
+}
+
+void BasicPiece::setAvailableMoves(const AvailableMoves &moves)
+{
+    m_availableMoves = moves;
+}
+
+void BasicPiece::removeAvailableMove(const Move &move)
+{
+    for(Moves &moves : m_availableMoves)
+        moves.removeOne(move);
+}
+
+void BasicPiece::addAvailableMove(const Move &move, MoveDirection dir)
+{
+    if(m_availableMoves.value(dir).contains(move))
+        return;
+
+    m_availableMoves[dir] << move;
+}
+
+bool BasicPiece::availableMovesContains(const Move &move)
+{
+    for(const Moves &moves : qAsConst(m_availableMoves))
+        if(moves.contains(move))
+            return true;
+
+    return false;
+}
+
+const Moves &BasicPiece::predictedMoves() const
+{
+    return m_predictedMoves;
+}
+
+void BasicPiece::setPredictedMoves(const Moves &moves)
+{
+    m_predictedMoves = moves;
+}
+
+bool BasicPiece::predictedMovesContains(const Move &move)
+{
+    return m_predictedMoves.contains(move);
+}
+
 BasicBoard *BasicPiece::board() const
 {
     return m_board;
 }
 
+const FightMoves &BasicPiece::fightMoves() const
+{
+    return m_fightMoves;
+}
+
+const AvailableMoves &BasicPiece::availableMoves() const
+{
+    return m_availableMoves;
+}
+
 void BasicPiece::setBoard(BasicBoard *board)
 {
-    if(m_board == board)
-        return;
-
     m_board = board;
 }
 

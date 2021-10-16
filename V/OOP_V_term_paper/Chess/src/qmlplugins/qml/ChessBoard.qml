@@ -13,6 +13,33 @@ BasicBoard {
     property color hoveredColor: "#008080"
     property int generalMargin: 20
 
+    SequentialAnimation on evenColor {
+        id: evenAnim
+        property string standartEvenColor: "#8B4513" // То же что и evenColor, но присваивать evenColor нельзя иначе будет binding loop
+        property string checkColor: "#8B0000"
+
+        loops: Animation.Infinite
+        running: AppState.checkToBlack && AppState.currentCommand === BasicPiece.Black
+                 || AppState.checkToWhite && AppState.currentCommand === BasicPiece.White
+        ColorAnimation {
+            from: evenAnim.standartEvenColor
+            to: evenAnim.checkColor
+            duration: 2000
+            easing.type: Easing.InQuart
+        }
+        ColorAnimation {
+            from: evenAnim.checkColor
+            to: evenAnim.standartEvenColor
+            duration: 3000
+            easing.type: Easing.OutQuart
+        }
+
+        onRunningChanged: {
+            if(!running)
+                evenColor = standartEvenColor
+        }
+    }
+
     QtObject {
         id: p
         function mapIndexToLetter(index) {

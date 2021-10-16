@@ -1,5 +1,7 @@
 #include "basicboard.h"
 #include "basicgridcell.h"
+#include "rook.h"
+#include "king.h"
 
 #include "../core/gamemediator.h"
 
@@ -8,14 +10,14 @@ BasicBoard::BasicBoard(QQuickItem *parent)
     , m_grid()
     , m_pieces()
     , m_inverted(false)
-    , m_observer(new GameMediator(this))
+    , m_mediator(new GameMediator(this))
 {
 
 }
 
 BasicBoard::~BasicBoard()
 {
-    delete m_observer;
+    delete m_mediator;
 }
 
 void BasicBoard::componentComplete()
@@ -49,6 +51,17 @@ void BasicBoard::componentComplete()
     }
 
     for(BasicPiece *piece : qAsConst(m_pieces)) {
+        if(!piece)
+            continue;
+
+        King *king = dynamic_cast<King *>(piece);
+        if(king != nullptr)
+            king->setMoved(false);
+
+        Rook *rook = dynamic_cast<Rook *>(piece);
+        if(rook != nullptr)
+            rook->setMoved(false);
+
         piece->setBoard(this);
         BasicGridCell *cell = m_grid[piece->rowIndex()][piece->columnIndex()];
         cell->setPiece(piece);
@@ -57,6 +70,8 @@ void BasicBoard::componentComplete()
     Q_ASSERT_X(m_pieces.size() == 32,
                "BasicBoard::componentComplete()",
                "BasicBoard initialized " + QString::number(m_pieces.size()).toLatin1() + " pieces");
+
+    m_mediator->initialize();
     QQuickItem::componentComplete();
 }
 
@@ -90,12 +105,12 @@ BasicGridCell *BasicBoard::cellUnderMouse(const QPointF &mouse)
 
 GameMediator *BasicBoard::observer() const
 {
-    return m_observer;
+    return m_mediator;
 }
 
 void BasicBoard::clearSelection()
 {
-    m_observer->clearSelection();
+    m_mediator->clearSelection();
 }
 
 const QList<BasicPiece *> &BasicBoard::pieces() const

@@ -2,7 +2,7 @@
 
 #include <QtQml>
 
-#include <AbstractVisitor>
+#include <AppState>
 
 #include <BasicBoard>
 #include <BasicGridCell>
@@ -30,4 +30,6 @@ void BoardPlugin::registerTypes(const char *uri)
     qmlRegisterType<Knight>(uri, 1, 0, "Knight");
     qmlRegisterType<Rook>(uri, 1, 0, "Rook");
     qmlRegisterType<Pawn>(uri, 1, 0, "Pawn");
+
+    qmlRegisterSingletonType<AppState>(uri, 1, 0, "AppState", &AppState::singletonTypeProvider);
 }

@@ -7,7 +7,7 @@ class CHESSCORE_EXPORT Knight : public BasicPiece
 {
     Q_OBJECT
 public:
-    MAKE_VISITABLE()
+    MAKE_VISITABLE(exept_func)
 
     explicit Knight(QQuickItem *parent = nullptr);
     virtual ~Knight();

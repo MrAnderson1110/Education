@@ -6,6 +6,7 @@ BasicGridCell::BasicGridCell(QQuickItem *parent)
     , m_piece(nullptr)
     , m_selected(false)
     , m_hovered(false)
+    , m_underFire(false)
 {
 
 }

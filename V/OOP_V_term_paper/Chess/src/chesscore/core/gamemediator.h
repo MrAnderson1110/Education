@@ -2,7 +2,6 @@
 #define GAMEMEDIATOR_H
 
 #include <QRectF>
-#include <memory>
 
 #include "chesscore_global.h"
 
@@ -11,13 +10,14 @@ class BasicPiece;
 class Selector;
 class Mover;
 class MoveChecker;
-class VisitorsHandler;
 
 class CHESSCORE_EXPORT GameMediator
 {
 public:
     explicit GameMediator(BasicBoard *board);
     ~GameMediator();
+
+    void initialize();
 
     void startMove(BasicPiece *piece);
     void move(BasicPiece *piece, const QRectF &geometry);
@@ -26,11 +26,13 @@ public:
     void clearSelection();
 
 private:
+    void chooseCommand();
+
+private:
     BasicBoard *m_board;
     Mover *m_mover;
     Selector *m_selector;
     MoveChecker *m_moveChecker;
-    VisitorsHandler *handler;
 };
 
 #endif // GAMEMEDIATOR_H

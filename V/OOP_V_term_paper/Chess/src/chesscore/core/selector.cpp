@@ -1,19 +1,18 @@
 #include "selector.h"
 
-#include "../gui/basicboard.h"
-#include "../gui/basicpiece.h"
-#include "../gui/basicgridcell.h"
+#include <BasicBoard>
+#include <BasicPiece>
+#include <BasicGridCell>
 
 Selector::Selector(BasicBoard *board)
     : m_board(board)
-    , m_selectionPiece(nullptr)
     , m_hoveredCell(nullptr)
     , m_selectionList()
 {
 
 }
 
-void Selector::updateSelection(BasicPiece *piece, const QList<QPoint> &availableMoves)
+void Selector::updateSelection(BasicPiece *initiator)
 {
     for(BasicGridCell *cell : qAsConst(m_selectionList)) {
         cell->setSelected(false);
@@ -21,38 +20,35 @@ void Selector::updateSelection(BasicPiece *piece, const QList<QPoint> &available
     }
 
     m_selectionList.clear();
-    if(!piece) {
-        m_selectionPiece = nullptr;
+    if(!initiator)
         return;
+
+    {
+        Move selfPoint(initiator->rowIndex(), initiator->columnIndex());
+        BasicGridCell *selfCell = m_board->cell(selfPoint.x(), selfPoint.y());
+        selfCell->setSelected(true);
+        m_selectionList.append(selfCell);
     }
 
-    QList<QPoint> moves = availableMoves;
-    moves << QPoint(piece->rowIndex(), piece->columnIndex());
-    for(QPoint p : qAsConst(moves)) {
-        BasicGridCell *cell = m_board->cell(p.x(), p.y());
-
-        Q_ASSERT_X(cell != nullptr,
-                   "Mover::updateSelection()",
-                   "cell in row: " + QString::number(p.x()).toLatin1() +
-                   " column " + QString::number(p.y()).toLatin1() +
-                   " is not available for piece type: " + QString::number(piece->type()).toLatin1());
-
-        BasicPiece *cellPiece = cell->piece();
-        if(cellPiece == nullptr || cell->piece() == piece) {
+    for(const Moves &moves : initiator->availableMoves()) {
+        for(Move move : qAsConst(moves)) {
+            BasicGridCell *cell = m_board->cell(move.x(), move.y());
             m_selectionList.append(cell);
             cell->setSelected(true);
         }
-        else if(cellPiece->command() != piece->command()) {
-            m_selectionList.append(cell);
-            cell->setUnderFire(true);
-        }
     }
+
+    //    for(const FightPair &fightMove : initiator->fightMoves()) {
+    //        const Move &move = fightMove.second;
+    //        BasicGridCell *cell = m_board->cell(move.x(), move.y());
+    //        cell->setUnderFire(true);
+    //    }
 }
 
 QPoint Selector::hoveredPoint() const
 {
     if(!m_hoveredCell)
-        return { -1, -1 };
+        return INVALID_POINT;
 
     return { m_hoveredCell->rowIndex(), m_hoveredCell->columnIndex() };
 }

@@ -7,7 +7,7 @@ class CHESSCORE_EXPORT Queen : public BasicPiece
 {
     Q_OBJECT
 public:
-    MAKE_VISITABLE()
+    MAKE_VISITABLE(exept_func)
 
     explicit Queen(QQuickItem *parent = nullptr);
     virtual ~Queen();

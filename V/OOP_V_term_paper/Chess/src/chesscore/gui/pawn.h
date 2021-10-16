@@ -7,7 +7,7 @@ class CHESSCORE_EXPORT Pawn : public BasicPiece
 {
     Q_OBJECT
 public:
-    MAKE_VISITABLE()
+    MAKE_VISITABLE(exept_func)
 
     explicit Pawn(QQuickItem *parent = nullptr);
     virtual ~Pawn();
