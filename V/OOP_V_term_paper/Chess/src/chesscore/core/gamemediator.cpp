@@ -29,7 +29,7 @@ void GameMediator::initialize()
 
 void GameMediator::startMove(BasicPiece *piece)
 {
-    if(piece->command() != appState->currentCommand())
+    if(!movable(piece))
         return;
 
     m_selector->updateSelection(piece);
@@ -39,7 +39,7 @@ void GameMediator::startMove(BasicPiece *piece)
 
 void GameMediator::move(BasicPiece *piece, const QRectF &geometry)
 {
-    if(piece->command() != appState->currentCommand())
+    if(!movable(piece))
         return;
 
     m_selector->updateHover(geometry);
@@ -48,7 +48,7 @@ void GameMediator::move(BasicPiece *piece, const QRectF &geometry)
 
 void GameMediator::finishMove(BasicPiece *piece)
 {
-    if(piece->command() != appState->currentCommand())
+    if(!movable(piece))
         return;
 
     Move targetPoint = m_selector->hoveredPoint();
@@ -82,5 +82,13 @@ void GameMediator::chooseCommand()
         appState->setCurrentCommand(BasicPiece::White);
         break;
     }
+}
+
+bool GameMediator::movable(BasicPiece *piece) const
+{
+    //    if(piece->command() != appState->currentCommand())
+    //        return false;
+
+    return true;
 }
 

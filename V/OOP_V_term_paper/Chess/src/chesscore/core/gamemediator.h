@@ -27,6 +27,7 @@ public:
 
 private:
     void chooseCommand();
+    bool movable(BasicPiece *piece) const;
 
 private:
     BasicBoard *m_board;

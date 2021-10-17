@@ -52,11 +52,15 @@ void Mover::finishMove(BasicPiece *piece)
         cell = m_board->cell(piece->rowIndex(), piece->columnIndex());
 
     Move prevPoint(piece->rowIndex(), piece->columnIndex());
-
     storePieceToCell(piece, cell);
 
+    bool moved = false;
+    King *king = dynamic_cast<King *>(piece);
+    if(king != nullptr)
+        moved = king->moved();
+
     State *rookState = checkCastling(piece, prevPoint);
-    State *pieceState = new State(piece, prevPoint, Move(piece->rowIndex(), piece->columnIndex()));
+    State *pieceState = new State(piece, prevPoint, Move(piece->rowIndex(), piece->columnIndex()), moved);
 
     Snapshot *snap = new Snapshot;
     snap->add(pieceState);
@@ -73,12 +77,20 @@ void Mover::reset()
     Snapshot *snap = appHistory->pop();
     State *state = dynamic_cast<State *>(snap->next());
     while(state != nullptr) {
+        BasicPiece *initiator = state->owner();
         if(state->from() != state->to()) {
-            BasicPiece *initiator = state->owner();
             BasicGridCell *initiatorCell = m_board->cell(state->from().x(), state->from().y());
-
             storePieceToCell(initiator, initiatorCell);
         }
+
+
+        King *king = dynamic_cast<King *>(initiator);
+        if(king != nullptr)
+            king->setMoved(state->moved());
+
+        Rook *rook = dynamic_cast<Rook *>(initiator);
+        if(rook != nullptr)
+            rook->setMoved(state->moved());
 
         state = dynamic_cast<State *>(snap->next());
     }
@@ -122,14 +134,14 @@ State *Mover::checkCastling(BasicPiece *piece, const Move &prevPoint)
                 BasicGridCell *rookCell = m_board->cell(leftRook->rowIndex(), king->columnIndex() + 1);
                 storePieceToCell(leftRook, rookCell);
                 leftRook->setMoved(true);
-                rookState = new State(leftRook, prevPoint, Move(leftRook->rowIndex(), leftRook->columnIndex()));
+                rookState = new State(leftRook, prevPoint, Move(leftRook->rowIndex(), leftRook->columnIndex()), false);
             }
             else if(rightCstrling && rightRook != nullptr) {
                 Move prevPoint(rightRook->rowIndex(), rightRook->columnIndex());
                 BasicGridCell *rookCell = m_board->cell(rightRook->rowIndex(), king->columnIndex() - 1);
-                storePieceToCell(leftRook, rookCell);
+                storePieceToCell(rightRook, rookCell);
                 rightRook->setMoved(true);
-                rookState = new State(rightRook, prevPoint, Move(rightRook->rowIndex(), rightRook->columnIndex()));
+                rookState = new State(rightRook, prevPoint, Move(rightRook->rowIndex(), rightRook->columnIndex()), false);
             }
             else
                 Q_ASSERT_X(false,

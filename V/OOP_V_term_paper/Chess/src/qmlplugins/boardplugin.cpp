@@ -3,6 +3,7 @@
 #include <QtQml>
 
 #include <AppState>
+#include <AppHistory>
 
 #include <BasicBoard>
 #include <BasicGridCell>
@@ -32,4 +33,7 @@ void BoardPlugin::registerTypes(const char *uri)
     qmlRegisterType<Pawn>(uri, 1, 0, "Pawn");
 
     qmlRegisterSingletonType<AppState>(uri, 1, 0, "AppState", &AppState::singletonTypeProvider);
+    qmlRegisterSingletonType<AppHistory>(uri, 1, 0, "AppHistory", &AppHistory::singletonTypeProvider);
+
+    qmlRegisterUncreatableType<Snapshot>(uri, 1, 0, "Snapshot", "Must be create from C++ side only");
 }

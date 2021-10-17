@@ -38,11 +38,11 @@ void Selector::updateSelection(BasicPiece *initiator)
         }
     }
 
-    //    for(const FightPair &fightMove : initiator->fightMoves()) {
-    //        const Move &move = fightMove.second;
-    //        BasicGridCell *cell = m_board->cell(move.x(), move.y());
-    //        cell->setUnderFire(true);
-    //    }
+    for(const FightPair &fightMove : initiator->fightMoves()) {
+        const Move &move = fightMove.second;
+        BasicGridCell *cell = m_board->cell(move.x(), move.y());
+        cell->setUnderFire(true);
+    }
 }
 
 QPoint Selector::hoveredPoint() const
