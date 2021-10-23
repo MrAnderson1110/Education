@@ -4,3 +4,6 @@
 [submodule "IV/Kurs.SAOD.IV/CarRentalClientsBase"]
 	path = IV/Kurs.SAOD.IV/CarRentalClientsBase
 	url = git@github.com:MrAnderson1110/CarRentalClientsBase.git
+[submodule "/home/mranderson/gitEducation/Education/III/Labs.CompGraphics.III/lab_4/OpenGL-Qt-exemple"]
+	path = /home/mranderson/gitEducation/Education/III/Labs.CompGraphics.III/lab_4/OpenGL-Qt-exemple
+	url = git@github.com:MrAnderson1110/OpenGL_Qt_Exemple.git
