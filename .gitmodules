@@ -1,0 +1,3 @@
+[submodule "V/OOP_V_term_paper/Chess"]
+	path = V/OOP_V_term_paper/Chess
+	url = git@github.com:MrAnderson1110/Chess.git
