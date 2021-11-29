@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>lightFrag.frag</file>
-        <file>lightVert.vert</file>
-        <file>mainVert.vert</file>
-        <file>mainFrag.frag</file>
-    </qresource>
-</RCC>
