@@ -5,7 +5,9 @@
 [submodule "4/Kurs.SAOD.IV/CarRentalClientsBase"]
 	path = 4/Kurs.SAOD.IV/CarRentalClientsBase
 	url = git@github.com:MrAnderson1110/CarRentalClientsBase.git
+	branch = master
 [submodule "3/Labs.CompGraphics.III/lab_4/OpenGL_Qt_Exemple"]
 	path = 3/Labs.CompGraphics.III/lab_4/OpenGL_Qt_Exemple
 	url = git@github.com:MrAnderson1110/OpenGL_Qt_Exemple.git
+	branch = master
 	
