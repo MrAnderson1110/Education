@@ -1,6 +1,7 @@
 [submodule "5/OOP_V_term_paper/Chess"]
 	path = 5/OOP_V_term_paper/Chess
 	url = git@github.com:MrAnderson1110/Chess.git
+	branch = master
 [submodule "4/Kurs.SAOD.IV/CarRentalClientsBase"]
 	path = 4/Kurs.SAOD.IV/CarRentalClientsBase
 	url = git@github.com:MrAnderson1110/CarRentalClientsBase.git
