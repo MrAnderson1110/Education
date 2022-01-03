@@ -1,13 +1,9 @@
-[submodule "V/OOP_V_term_paper/Chess"]
-	path = V/OOP_V_term_paper/Chess
-	url = git@github.com:MrAnderson1110/Chess.git
-[submodule "IV/Kurs.SAOD.IV/CarRentalClientsBase"]
-	path = IV/Kurs.SAOD.IV/CarRentalClientsBase
+[submodule "4/Kurs.SAOD.IV/CarRentalClientsBase"]
+	path = 4/Kurs.SAOD.IV/CarRentalClientsBase
 	url = git@github.com:MrAnderson1110/CarRentalClientsBase.git
-[submodule "III/Labs.CompGraphics.III/lab_4/OpenGL_Qt_Exemple"]
-	path = III/Labs.CompGraphics.III/lab_4/OpenGL_Qt_Exemple
+[submodule "3/Labs.CompGraphics.III/lab_4/OpenGL_Qt_Exemple"]
+	path = 3/Labs.CompGraphics.III/lab_4/OpenGL_Qt_Exemple
 	url = git@github.com:MrAnderson1110/OpenGL_Qt_Exemple.git
 [submodule "5/OOP_V_term_paper/Chess"]
 	path = 5/OOP_V_term_paper/Chess
 	url = git@github.com:MrAnderson1110/Chess.git
-	branch = master
