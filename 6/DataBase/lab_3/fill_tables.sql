@@ -1,8 +1,6 @@
 INSERT INTO authors (author_name, author_surname) 
 VALUES ('Иван', 'Иванов'), ('Андрей', 'Андреев'), ('Сергей', 'Сергеев'), ('Евгений', 'Краснов');
 
-# ------------------------------------------------------------ #
-
 INSERT INTO graphs (graph_name, author_id)
 VALUES (
 	'Граф 1',
@@ -33,8 +31,6 @@ VALUES (
 		WHERE au.author_name = 'Евгений' AND au.author_surname = 'Краснов'
 	)
 );
-
-# ------------------------------------------------------------ #
 
 INSERT INTO vertexes (vertex_name, top_left_x, top_left_y, vert_size, graph_id)
 VALUES 
@@ -69,8 +65,6 @@ VALUES
 	'Вершина 6', 5, 2, 1, 
 	(SELECT graph_id FROM graphs WHERE graph_name = 'Граф 4')
 );
-
-# ------------------------------------------------------------ #
 
 INSERT INTO vertex_identity (start_vertex, end_vertex)
 VALUES 

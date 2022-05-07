@@ -17,7 +17,7 @@ FROM (
 		WHERE internal_vr.graph_id = gr.graph_id
 	) AND vr.graph_id = gr.graph_id
 ) as min_cor
-WHERE max_cor.gid = min_cor.gid
+WHERE max_cor.gid = min_cor.gid;
 
 
 # д. пользователи-авторы графов с максимальных количеством вершин
@@ -37,7 +37,7 @@ WHERE EXISTS (
 		WHERE vr.graph_id = gr.graph_id
 		GROUP BY gr.author_id
 	) 
-)
+);
 
 
 # е. Вершины, для которых есть исходящие ребра, ведущие ко всем остальным вершинам еѐ графа
@@ -57,16 +57,27 @@ WHERE NOT EXISTS (
 			AND vi.start_vertex = vr.vertex_id 
 			AND vi.end_vertex is not null
 	)
-)
+);
 
 
 # ж. Вершина, у которой нет входящих ребер от вершины о словом «ошибка»
 SELECT *
 FROM vertexes as vr
 EXCEPT
-SELECT vr.* 
-FROM vertexes as vr, vertex_identity as vi
-WHERE vr.vertex_name~*'ошибка+' AND vr.vertex_id = vi.start_vertex
+SELECT out_vr.* 
+FROM vertexes as out_vr
+LEFT JOIN vertex_identity as vi
+ON out_vr.vertex_id = vi.start_vertex
+LEFT JOIN vertexes as vr
+ON vr.vertex_id = vi.end_vertex
+WHERE out_vr.vertex_name~*'ошибка+'
+ORDER BY out_vr.vertex_id;
+
+select * from vertexes as vr
+left join vertex_identity as vi
+on vr.vertex_id = vi.start_vertex
+left join vertexes as inner_vr
+on vi.end_vertex = inner_vr.vertex_id
 
 SELECT *
 FROM vertexes as vr
@@ -77,4 +88,5 @@ WHERE vr.vertex_id NOT IN (
 	ON internal_vr.vertex_id = vi.start_vertex
 	WHERE internal_vr.vertex_name~*'ошибка+'
 )
+ORDER BY vertex_id;
 
