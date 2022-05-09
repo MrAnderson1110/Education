@@ -49,4 +49,4 @@ qrc_*
 *.o
 object_script*
 __pycache__/
-.~lock
+.~lock*
