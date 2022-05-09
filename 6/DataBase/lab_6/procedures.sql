@@ -1,40 +1,249 @@
-DROP FUNCTION insert_vertex(character varying,integer,real,real,integer,integer);
-CREATE OR REPLACE FUNCTION insert_vertex(
+DROP PROCEDURE IF EXISTS insert_vertex_proc(character varying,integer,real,real,integer,integer);
+CREATE OR REPLACE PROCEDURE insert_vertex_proc(
 	vname character varying,
 	vgraph int,
 	vtlx real,
 	vtly real,
-	vsize int,
+	vrsize int,
 	vlink int
-)
-	RETURNS boolean
+)	
 	LANGUAGE 'plpgsql'
 AS $$	
 	DECLARE
+		seq_name varchar(100);
 		new_vert_id integer;
+		graph_of_link integer;
 		
-	BEGIN
-		
-		if not exists (SELECT graph_id FROM graphs WHERE graph_id = vgraph) of vsize <= 0 then
-			RETURN false;
+	BEGIN		
+		if not exists (
+			SELECT vertex_id
+			FROM vertexes
+			WHERE graph_id = vgraph and vertex_id = vlink
+		) and vlink IS NOT NULL then
+			RETURN;
 		end if;
 		
-		new_vert_id := (
-			SELECT max(vr.vertex_id) + 1
-			FROM vertexes as vr
-		);
+		if not exists (
+			SELECT graph_id 
+			FROM graphs 
+			WHERE graph_id = vgraph
+		) or vrsize <= 0 then
+			RETURN;
+		end if;
+		
+		seq_name := (select pg_get_serial_sequence('vertexes', 'vertex_id') as new_id);
+		new_vert_id := (select nextval(seq_name) as new_id) + 1;		
 		
 		INSERT INTO vertexes (vertex_name, graph_id, top_left_x, top_left_y, vert_size)
-		VALUES (vname, vgraph, vtlx, vtly, vsize);
+		VALUES (vname, vgraph, vtlx, vtly, vrsize);
 		
 		if vlink IS NOT NULL then
 			INSERT INTO vertex_identity (start_vertex, end_vertex)
 			VALUES (new_vert_id, vlink);
 		end if;
-		return true;
-		
 	END
-$$
+$$;
+
+call insert_vertex_proc('name of inserted vertex', 19, 7.1, 8.3, 9, NULL);
+call insert_vertex_proc('name of inserted vertex with link', 19, 7.1, 8.3, 9, 7);
+call insert_vertex_proc('name of inserted vertex with link', 19, 7.1, 8.3, 9, 63);
+
+---------
+
+DROP PROCEDURE IF EXISTS delete_with_clear_proc(integer);
+CREATE OR REPLACE PROCEDURE delete_with_clear_proc(vid integer)
+	LANGUAGE 'plpgsql'
+AS $$	
+	DECLARE
+		gid integer;
+		auid integer;
+	BEGIN		
+		gid := (
+			SELECT graph_id 
+			FROM vertexes
+			WHERE vertex_id = vid
+		);
+
+		auid := (
+			SELECT author_id
+			FROM graphs
+			WHERE graph_id = gid
+		);
+
+		if exists (SELECT vertex_id FROM vertexes WHERE vertex_id = vid) then
+			DELETE FROM vertexes WHERE vertex_id = vid;
+		end if;
+
+		if not exists (SELECT vertex_id FROM vertexes WHERE graph_id = gid) then
+			DELETE FROM graphs WHERE graph_id = gid;
+		end if;
+
+		if not exists (SELECT graph_id FROM graphs WHERE author_id = auid) then
+			DELETE FROM authors WHERE author_id = auid;
+		end if;
+	END
+$$;
+
+call delete_with_clear_proc(75);
+
+---------
+
+DROP PROCEDURE IF EXISTS delete_author_cascade(integer);
+CREATE OR REPLACE PROCEDURE delete_author_cascade(auid integer)	
+	LANGUAGE 'plpgsql'
+AS $$	
+	BEGIN	
+		DELETE FROM graphs WHERE author_id = auid;
+		DELETE FROM authors WHERE author_id = auid;
+	END
+$$;
+
+call delete_author_cascade(4);
+
+---------
+
+DROP FUNCTION IF EXISTS authors_count();
+CREATE OR REPLACE FUNCTION authors_count()	
+RETURNS integer
+	LANGUAGE 'plpgsql'
+AS $$	
+	DECLARE
+		counts integer;
+	BEGIN
+		counts := (
+			SELECT count(*) 
+			FROM authors
+		);
+
+		RETURN counts;			
+	END
+$$;
+
+select * from authors_count();
+
+DROP FUNCTION IF EXISTS graphs_count_of_author(integer);
+CREATE OR REPLACE FUNCTION graphs_count_of_author(auid integer)	
+RETURNS integer
+	LANGUAGE 'plpgsql'
+AS $$	
+	DECLARE
+		counts integer;
+	BEGIN
+		counts := (
+			SELECT count(*) 
+			FROM graphs 
+			WHERE author_id = auid
+		);
+
+		RETURN counts;
+	END
+$$;
+
+select * from graphs_count_of_author(18);
+
+DROP FUNCTION IF EXISTS vertexes_count_of_author(integer);
+CREATE OR REPLACE FUNCTION vertexes_count_of_author(auid integer)	
+RETURNS integer
+	LANGUAGE 'plpgsql'
+AS $$	
+	DECLARE
+		counts integer;
+	BEGIN
+		counts := (
+			SELECT count(*) 
+			FROM vertexes as vr
+			LEFT JOIN graphs as gr
+			ON gr.graph_id = vr.graph_id
+			WHERE gr.author_id = auid
+		);
+
+		RETURN counts;
+	END
+$$;
+
+select * from vertexes_count_of_author(18);
+
+DROP FUNCTION IF EXISTS links_count_of_author(integer);
+CREATE OR REPLACE FUNCTION links_count_of_author(auid integer)	
+RETURNS integer
+	LANGUAGE 'plpgsql'
+AS $$	
+	DECLARE
+		counts integer;
+	BEGIN
+		counts := (
+			SELECT count(*) 
+			FROM vertex_identity as vi
+			LEFT JOIN vertexes as vr
+			ON vr.vertex_id = vi.start_vertex
+			LEFT JOIN graphs as gr
+			ON gr.graph_id = vr.graph_id
+			WHERE gr.author_id = auid
+		);
+
+		RETURN counts;
+	END
+$$;
+
+select * from links_count_of_author(18);
+
+---------
+
+DROP FUNCTION IF EXISTS get_statistic();
+CREATE OR REPLACE FUNCTION get_statistic()	
+RETURNS TABLE(
+	stat_author_id integer,
+	graphs_count integer,
+	vertexes_count integer,
+	links_count integer
+)
+	LANGUAGE 'plpgsql'
+AS $$	
+	DECLARE
+		auid RECORD;
+		grcount integer;
+		vrcount integer;
+		vicount integer;
+	BEGIN	
+
+		DROP TABLE IF EXISTS stat;
+		CREATE TEMPORARY TABLE IF NOT EXISTS stat (
+			stat_author_id integer NOT NULL,
+			graphs_count integer DEFAULT 0,
+			vertexes_count integer DEFAULT 0,
+			links_count integer DEFAULT 0
+		) ON COMMIT DROP;
+
+		for auid in SELECT author_id FROM authors loop
+			grcount := (
+				SELECT count(*) FROM graphs WHERE author_id = auid.author_id
+			);
+
+			vrcount := (
+				SELECT count(vr.*) FROM vertexes as vr
+				LEFT JOIN graphs as gr
+				ON vr.graph_id = gr.graph_id
+				WHERE gr.author_id = auid.author_id
+			);
+
+			vicount := (
+				SELECT count(vi.*) FROM vertex_identity as vi
+				LEFT JOIN vertexes as vr
+				ON vr.vertex_id = vi.start_vertex
+				LEFT JOIN graphs as gr
+				ON gr.graph_id = vr.graph_id
+				WHERE gr.author_id = auid.author_id
+			);
+
+			INSERT INTO stat (stat_author_id, graphs_count, vertexes_count, links_count)
+			VALUES (auid.author_id, grcount, vrcount, vicount);
+		end loop;
+
+		RETURN QUERY SELECT * FROM stat;
+	END
+$$;
+ 
+select * from get_statistic();
 
 CREATE OR REPLACE FUNCTION fill(
 	gn character varying,

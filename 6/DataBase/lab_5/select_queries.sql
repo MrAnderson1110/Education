@@ -64,20 +64,13 @@ WHERE NOT EXISTS (
 SELECT *
 FROM vertexes as vr
 EXCEPT
-SELECT out_vr.* 
-FROM vertexes as out_vr
-LEFT JOIN vertex_identity as vi
-ON out_vr.vertex_id = vi.start_vertex
-LEFT JOIN vertexes as vr
+SELECT vr.* FROM vertexes as vr
+RIGHT JOIN vertex_identity as vi
 ON vr.vertex_id = vi.end_vertex
-WHERE out_vr.vertex_name~*'ошибка+'
-ORDER BY out_vr.vertex_id;
-
-select * from vertexes as vr
-left join vertex_identity as vi
-on vr.vertex_id = vi.start_vertex
-left join vertexes as inner_vr
-on vi.end_vertex = inner_vr.vertex_id
+LEFT JOIN vertexes as inner_vr
+ON vi.start_vertex = inner_vr.vertex_id
+WHERE inner_vr.vertex_name~*'ошибка+'
+ORDER BY vertex_id;
 
 SELECT *
 FROM vertexes as vr
