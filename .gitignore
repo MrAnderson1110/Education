@@ -50,3 +50,4 @@ qrc_*
 *.orig
 *.o
 object_script*
+__pycache__/
