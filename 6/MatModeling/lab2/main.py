@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # trend
 def y(x):
-    return 0.9337 * math.log(x, math.e) + 6.0797
+    return 0.9856 * math.log(x, math.e) + 7.7511
 
 def A(x, y):
     n = len(x)
