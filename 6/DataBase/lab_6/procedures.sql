@@ -11,39 +11,52 @@ CREATE OR REPLACE PROCEDURE insert_vertex_proc(
 AS $$	
 	DECLARE
 		seq_name varchar(100);
-		new_vert_id integer;
+		found_vert_id integer;
 		graph_of_link integer;
 		
 	BEGIN		
-		if not exists (
-			SELECT vertex_id
-			FROM vertexes
-			WHERE graph_id = vgraph and vertex_id = vlink
-		) and vlink IS NOT NULL then
-			RETURN;
-		end if;
-		
 		if not exists (
 			SELECT graph_id 
 			FROM graphs 
 			WHERE graph_id = vgraph
 		) or vrsize <= 0 then
 			RETURN;
-		end if;
+		end if;		
 		
-		seq_name := (select pg_get_serial_sequence('vertexes', 'vertex_id') as new_id);
-		new_vert_id := (select nextval(seq_name) as new_id) + 1;		
-		
-		INSERT INTO vertexes (vertex_name, graph_id, top_left_x, top_left_y, vert_size)
-		VALUES (vname, vgraph, vtlx, vtly, vrsize);
-		
-		if vlink IS NOT NULL then
+		if exists (
+			select vertex_id 
+			from vertexes 
+			where vname = vertex_name
+				and vgraph = graph_id
+				and vtlx = top_left_x
+				and vtly = top_left_y
+				and vrsize = vert_size
+			) then
+
 			INSERT INTO vertex_identity (start_vertex, end_vertex)
-			VALUES (new_vert_id, vlink);
-		end if;
+			select vertex_id, vlink
+			from vertexes
+			where vname = vertex_name
+				and vgraph = graph_id
+				and vtlx = top_left_x
+				and vtly = top_left_y
+				and vrsize = vert_size;
+			 
+		else
+			seq_name := (select pg_get_serial_sequence('vertexes', 'vertex_id') as new_id);
+			found_vert_id := (select nextval(seq_name) as new_id) + 1;	
+		
+			INSERT INTO vertexes (vertex_name, graph_id, top_left_x, top_left_y, vert_size)
+			VALUES (vname, vgraph, vtlx, vtly, vrsize);
+
+			INSERT INTO vertex_identity (start_vertex, end_vertex)
+			VALUES (found_vert_id, vlink);
+		end if;	
+		
 	END
 $$;
 
+call insert_vertex_proc('Содержит отказ', 1, 1, 10, 15, 9);
 call insert_vertex_proc('name of inserted vertex', 19, 7.1, 8.3, 9, NULL);
 call insert_vertex_proc('name of inserted vertex with link', 19, 7.1, 8.3, 9, 7);
 call insert_vertex_proc('name of inserted vertex with link', 19, 7.1, 8.3, 9, 63);
@@ -93,6 +106,13 @@ CREATE OR REPLACE PROCEDURE delete_author_cascade(auid integer)
 	LANGUAGE 'plpgsql'
 AS $$	
 	BEGIN	
+		DELETE FROM vertexes WHERE vertex_id IN (
+			SELECT vr.vertex_id 
+			FROM vertexes as vr
+			INNER JOIN graphs as gr
+			ON gr.graph_id = vr.graph_id
+			WHERE gr.author_id = auid
+		)
 		DELETE FROM graphs WHERE author_id = auid;
 		DELETE FROM authors WHERE author_id = auid;
 	END
