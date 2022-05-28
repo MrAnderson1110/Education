@@ -1,12 +1,14 @@
 # а. Вершины, название/текст которых содержит слово «отказ», но не зканчивается им
 SELECT * FROM vertexes WHERE vertex_name~*'отказ.';
 
+SELECT * FROM vertexes WHERE vertex_name ILIKE '%отказ_%';
 
 # б. Вершины, у которых нет исходящих ребер
 SELECT vr.*
-FROM vertexes AS vr, vertex_identity AS vi
-WHERE vr.vertex_id = vi.start_vertex AND vi.end_vertex IS NULL;
-
+FROM vertexes AS vr
+LEFT JOIN vertex_identity AS vi
+ON vr.vertex_id = vi.start_vertex 
+WHERE vi.end_vertex IS NULL;
 
 # в. Графы, в которых есть пара вершин, связанных ребрами в обе стороны
 SELECT DISTINCT gr.*
@@ -17,3 +19,4 @@ INNER JOIN vertexes AS vr
 ON vi1.start_vertex = vr.vertex_id
 INNER JOIN graphs AS gr
 ON vr.graph_id = gr.graph_id;
+
