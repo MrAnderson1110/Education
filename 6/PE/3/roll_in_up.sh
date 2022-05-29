@@ -1,31 +1,3 @@
-# #!/bin/bash
-
-# RED='\033[1;31m'
-# BLUE='\033[1;34m'
-# GREEN='\33[0;32m'
-# CLEARC='\033[0m'
-
-# usage() {
-#     cat << EOF
-#     Usage: $(basename "${BASH_SOURCE[0]}") command [args]
-
-#     Available commands:
-#     -h --help - Print this help
-#     -i --install - Install all requeried packages
-#     -c --configure - Configure apache2
-#     -a --all - Install and configure apache2
-# EOF
-#     exit
-# }
-
-# parce
-
-# clear
-# printf "Start script from ${GREEN}${PWD}${CLEARC}\n"
-# sudo apt udpate
-# yes | sudo apt install apache2
-# clear
-
 #!/bin/bash
 
 RED='\033[1;31m'
@@ -62,16 +34,29 @@ print_ln() {
 }
 
 make_link_dir() {
-	if [ ! -h /var/www/${1} ]; then
-        sudo rm -rf /var/www/${1}
-    else 
-        sudo rm /var/www/${1}
-    fi
+    cd ${1}
+    target_path=/var/www/$(basename ${PWD})
+    if [[ -d ${target_path} || -h ${target_path} ]]; then
+        print_ln Critical "Directory exists!"
+        read -p "Do you want remove directory? (y/N):"	ans
+	    case $ans in
+	    	[Yy]* ) confirm=1 ;;
+	    	[Nn]* | *) return;;
+	    	* ) echo "Valid answers are Y or N.";;
+	    esac
     
-    sudo ln -s -r ${1} /var/www/
-
-    sudo chown -R ${USER}:${USER} /var/www/${1}
-    sudo chmod -R 755 /var/www/${1}
+        if(($confirm==1)); then    
+            if [ ! -h ${target_path} ]; then
+                sudo rm -rf ${target_path}
+            else 
+                sudo rm ${target_path}
+            fi;
+        fi;
+    fi;
+    
+    sudo ln -s -r ${PWD} /var/www/
+    sudo chown -R ${USER}:${USER} ${target_path}
+    sudo chmod -R 755 ${target_path}
 }
 
 install() {
