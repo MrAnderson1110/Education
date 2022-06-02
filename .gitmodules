@@ -7,3 +7,6 @@
 [submodule "5/OOP_V_term_paper/Chess"]
 	path = 5/OOP_V_term_paper/Chess
 	url = git@github.com:MrAnderson1110/Chess.git
+[submodule "6/Practice/VSC"]
+	path = 6/Practice/VSC
+	url = https://github.com/MrAnderson1110/VSC.git
